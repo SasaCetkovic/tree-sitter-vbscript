@@ -56,10 +56,10 @@ module.exports = grammar({
     rules: {
         source_file: $ => repeat($._statement_line),
 
-        _statement_group: $ => seq(
+        _statement_group: $ => prec.left(seq(
             $._statement,
             repeat(seq(':', $._statement))
-        ),
+        )),
 
         _statement_line: $ => seq(
             $._statement_group,
