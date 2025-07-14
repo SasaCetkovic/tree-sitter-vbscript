@@ -145,7 +145,7 @@ module.exports = grammar({
             ci('if')
         ),
 
-        single_line_if_statement: $ => prec(1, seq(
+        single_line_if_statement: $ => prec.right(1, seq(
             ci('if'),
             field('condition', $._expression),
             ci('then'),
