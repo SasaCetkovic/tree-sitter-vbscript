@@ -50,7 +50,6 @@ module.exports = grammar({
     supertypes: $ => [
         $._statement,
         $._expression,
-        $._case_expression,
         $._class_statement,
     ],
 
