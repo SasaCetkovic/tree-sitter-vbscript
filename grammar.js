@@ -23,27 +23,24 @@ module.exports = grammar({
     ],
 
     precedences: $ => [
+        ['imp'],
+        ['eqv'],
+        ['xor'],
+        ['or'],
+        ['and'],
+        ['not'],
+        ['comparison', 'is'],
+        ['concatenation'],
+        ['addition'],
+        ['modulo'],
+        ['integer_division'],
+        ['multiplication'],
+        ['unary'],
+        ['exponent'],
         [
             'member',
             'call',
             $._primary_expression,
-        ],
-        [
-            'unary',
-            'exponent',
-            'multiplication',
-            'integer_division',
-            'modulo',
-            'addition',
-            'concatenation',
-            'comparison',
-            'is',
-            'not',
-            'and',
-            'or',
-            'xor',
-            'eqv',
-            'imp'
         ]
     ],
 
@@ -54,7 +51,16 @@ module.exports = grammar({
     ],
 
     rules: {
-        source_file: $ => repeat($._statement_line),
+        source_file: $ => seq(
+            optional($.option_explicit_statement),
+            repeat($._statement_line)
+        ),
+
+        option_explicit_statement: $ => seq(
+            ci('option'),
+            ci('explicit'),
+            $._terminator
+        ),
 
         _statement_group: $ => prec.left(seq(
             $._statement,
@@ -62,12 +68,20 @@ module.exports = grammar({
         )),
 
         _statement_line: $ => seq(
-            $._statement_group,
+            repeat($.line_label),
+            optional($._statement_group),
             $._terminator
+        ),
+
+        line_label: $ => seq(
+            field('label', choice($.identifier, $.number_literal)),
+            ':'
         ),
 
         _statement: $ => choice(
             $.rem_comment, // REM is a statement, not an extra
+            $.with_statement,
+            $.on_error_statement,
             $.block_if_statement,
             $.single_line_if_statement,
             $.select_case_statement,
@@ -76,17 +90,59 @@ module.exports = grammar({
             $.do_loop_statement,
             $.while_wend_statement,
             $.exit_statement,
+            $.erase_statement,
+            $.goto_statement,
             $.declaration_statement,
             $.class_statement,
             $.function_declaration,
             $.sub_declaration,
             $.set_statement,
             $.assignment_statement,
+            $.call_statement,
             $.expression_statement,
             $.implicit_call_statement,
         ),
 
         // Statements
+        with_statement: $ => seq(
+            ci('with'),
+            field('object', $._expression),
+            repeat($._statement_line),
+            ci('end'),
+            ci('with')
+        ),
+
+        on_error_statement: $ => seq(
+            ci('on'),
+            ci('error'),
+            choice(
+                seq(ci('resume'), ci('next')),
+                seq(ci('goto'), field('label', choice($.identifier, $.number_literal)))
+            )
+        ),
+
+        goto_statement: $ => seq(
+            ci('goto'),
+            field('label', choice($.identifier, $.number_literal))
+        ),
+
+        erase_statement: $ => seq(
+            ci('erase'),
+            $._lvalue,
+            repeat(seq(',', $._lvalue))
+        ),
+
+        call_statement: $ => seq(
+            ci('call'),
+            choice(
+                $.call_expression,
+                seq(
+                    field('function', choice($.identifier, $.member_expression)),
+                    optional(field('arguments', $._argument_list))
+                )
+            )
+        ),
+
         function_declaration: $ => seq(
             optional(field('access_modifier', choice(
                 ci('public'),
@@ -123,8 +179,7 @@ module.exports = grammar({
         ),
 
         parameter: $ => seq(
-            // NOTE: Optional is not supported, but leaving here as a reminder
-            // optional(field('optional', ci('optional'))),
+            optional(field('optional', ci('optional'))),
             optional(field('mechanism', choice(
                 ci('byval'),
                 ci('byref')
@@ -428,6 +483,7 @@ module.exports = grammar({
 
         _primary_expression: $ => choice(
             $.member_expression,
+            $.unqualified_member_expression,
             $.call_expression,
             $.identifier,
             $.string_literal,
@@ -439,6 +495,11 @@ module.exports = grammar({
         ),
 
         parenthesized_expression: $ => seq('(', $._expression, ')'),
+
+        unqualified_member_expression: $ => prec('member', seq(
+            '.',
+            field('property', $.identifier)
+        )),
 
         member_expression: $ => prec('member', seq(
             field('object', $._primary_expression),
