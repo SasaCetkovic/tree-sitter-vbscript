@@ -422,7 +422,7 @@ module.exports = grammar({
             field('name', $.identifier),
             optional(field('dimensions', seq(
                 '(',
-                optional($._argument_list),
+                optional($.argument_list),
                 ')'
             )))
         ),
@@ -471,7 +471,7 @@ module.exports = grammar({
 
         implicit_call_statement: $ => prec(-1, seq(
             field('function', choice($.identifier, $.member_expression)),
-            field('arguments', $._argument_list)
+            field('arguments', $.argument_list)
         )),
 
         _expression: $ => choice(
@@ -510,11 +510,11 @@ module.exports = grammar({
         call_expression: $ => prec.left('call', seq(
             field('function', $._expression),
             '(',
-            field('arguments', optional($._argument_list)),
+            field('arguments', optional($.argument_list)),
             ')'
         )),
 
-        _argument_list: $ => seq(
+        argument_list: $ => seq(
             $._expression,
             repeat(seq(',', $._expression))
         ),
