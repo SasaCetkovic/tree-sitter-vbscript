@@ -53,6 +53,10 @@ module.exports = grammar({
         // when followed by an equals sign (assignment vs. comparison).
         [$._expression, $._lvalue],
         [$._primary_expression, $._lvalue],
+
+        // Ambiguity between an argument list with a single parenthesized
+        // expression `((foo))` and an argument list with a single item `(foo)`.
+        [$.parenthesized_expression, $.argument_list],
     ],
 
     supertypes: $ => [
