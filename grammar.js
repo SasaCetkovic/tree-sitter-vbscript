@@ -142,10 +142,8 @@ module.exports = grammar({
             ci('call'),
             choice(
                 $.call_expression,
-                seq(
-                    field('function', choice($.identifier, $.member_expression)),
-                    optional(field('arguments', $.argument_list))
-                )
+                $.member_expression,
+                $.identifier
             )
         ),
 
