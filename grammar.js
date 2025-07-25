@@ -52,6 +52,7 @@ module.exports = grammar({
         // An expression that is also a valid l-value creates an ambiguity
         // when followed by an equals sign (assignment vs. comparison).
         [$._expression, $._lvalue],
+        [$._primary_expression, $._lvalue],
     ],
 
     supertypes: $ => [
