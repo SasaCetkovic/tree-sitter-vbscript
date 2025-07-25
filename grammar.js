@@ -23,6 +23,7 @@ module.exports = grammar({
     ],
 
     precedences: $ => [
+        ['assignment'],
         ['imp'],
         ['eqv'],
         ['xor'],
@@ -41,6 +42,10 @@ module.exports = grammar({
             'member',
             'call'
         ]
+    ],
+
+    conflicts: $ => [
+        [$.implicit_call_expression, $._lvalue]
     ],
 
     supertypes: $ => [
@@ -96,10 +101,8 @@ module.exports = grammar({
             $.function_declaration,
             $.sub_declaration,
             $.set_statement,
-            $.assignment_statement,
             $.call_statement,
             $.expression_statement,
-            $.implicit_call_statement,
         ),
 
         // Statements
@@ -452,12 +455,6 @@ module.exports = grammar({
             field('right', $._expression)
         ),
 
-        assignment_statement: $ => seq(
-            optional(ci('let')),
-            field('left', $._lvalue),
-            '=',
-            field('right', $._expression)
-        ),
 
         _lvalue: $ => choice(
             $.identifier,
@@ -467,14 +464,11 @@ module.exports = grammar({
             $.call_expression
         ),
 
-        expression_statement: $ => $.call_expression,
-
-        implicit_call_statement: $ => prec(-1, seq(
-            field('function', choice($.identifier, $.member_expression)),
-            field('arguments', $.argument_list)
-        )),
+        expression_statement: $ => $._expression,
 
         _expression: $ => choice(
+            $.assignment_expression,
+            $.implicit_call_expression,
             $.unary_expression,
             $.binary_expression,
             $.parenthesized_expression,
@@ -482,6 +476,18 @@ module.exports = grammar({
             $.call_expression,
             $._primary_expression
         ),
+
+        assignment_expression: $ => prec.right('assignment', seq(
+            optional(ci('let')),
+            field('left', $._lvalue),
+            '=',
+            field('right', $._expression)
+        )),
+
+        implicit_call_expression: $ => prec(-1, seq(
+            field('function', choice($.identifier, $.member_expression)),
+            field('arguments', $.argument_list)
+        )),
 
         _primary_expression: $ => choice(
             $.unqualified_member_expression,
