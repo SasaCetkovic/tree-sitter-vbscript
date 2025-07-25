@@ -77,10 +77,10 @@ module.exports = grammar({
             $._terminator
         ),
 
-        line_label: $ => seq(
+        line_label: $ => prec(1, seq(
             field('label', choice($.identifier, $.number_literal)),
             ':'
-        ),
+        )),
 
         _statement: $ => choice(
             $.rem_comment, // REM is a statement, not an extra
