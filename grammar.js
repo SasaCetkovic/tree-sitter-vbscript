@@ -52,7 +52,7 @@ module.exports = grammar({
     rules: {
         source_file: $ => seq(
             optional($.option_explicit_statement),
-            repeat($._statement_line)
+            repeat($.statement_line)
         ),
 
         option_explicit_statement: $ => seq(
@@ -61,14 +61,14 @@ module.exports = grammar({
             $._terminator
         ),
 
-        _statement_group: $ => prec.left(seq(
+        statement_group: $ => prec.left(seq(
             $._statement,
             repeat(seq(':', $._statement))
         )),
 
-        _statement_line: $ => seq(
+        statement_line: $ => seq(
             repeat($.line_label),
-            optional($._statement_group),
+            optional($.statement_group),
             $._terminator
         ),
 
@@ -106,7 +106,7 @@ module.exports = grammar({
         with_statement: $ => seq(
             ci('with'),
             field('object', $._expression),
-            repeat($._statement_line),
+            repeat($.statement_line),
             ci('end'),
             ci('with')
         ),
@@ -150,9 +150,9 @@ module.exports = grammar({
             ci('function'),
             field('name', $.identifier),
             '(',
-            field('parameters', optional($._parameter_list)),
+            field('parameters', optional($.parameter_list)),
             ')',
-            repeat($._statement_line),
+            repeat($.statement_line),
             ci('end'),
             ci('function')
         ),
@@ -165,14 +165,14 @@ module.exports = grammar({
             ci('sub'),
             field('name', $.identifier),
             '(',
-            field('parameters', optional($._parameter_list)),
+            field('parameters', optional($.parameter_list)),
             ')',
-            repeat($._statement_line),
+            repeat($.statement_line),
             ci('end'),
             ci('sub')
         ),
 
-        _parameter_list: $ => seq(
+        parameter_list: $ => seq(
             $.parameter,
             repeat(seq(',', $.parameter))
         ),
@@ -192,7 +192,7 @@ module.exports = grammar({
             field('condition', $._expression),
             ci('then'),
             $._terminator,
-            repeat($._statement_line),
+            repeat($.statement_line),
             repeat($.elseif_clause),
             optional($.else_clause),
             ci('end'),
@@ -203,10 +203,10 @@ module.exports = grammar({
             ci('if'),
             field('condition', $._expression),
             ci('then'),
-            field('consequence', $._statement_group),
+            field('consequence', $.statement_group),
             optional(seq(
                 ci('else'),
-                field('alternative', $._statement_group)
+                field('alternative', $.statement_group)
             ))
         )),
 
@@ -215,13 +215,13 @@ module.exports = grammar({
             field('condition', $._expression),
             ci('then'),
             $._terminator,
-            repeat($._statement_line)
+            repeat($.statement_line)
         ),
 
         else_clause: $ => seq(
             ci('else'),
             $._terminator,
-            repeat($._statement_line)
+            repeat($.statement_line)
         ),
 
         for_statement: $ => seq(
@@ -235,7 +235,7 @@ module.exports = grammar({
                 ci('step'),
                 field('step', $._expression)
             )),
-            repeat($._statement_line),
+            repeat($.statement_line),
             ci('next')
         ),
 
@@ -245,7 +245,7 @@ module.exports = grammar({
             field('element', $._lvalue),
             ci('in'),
             field('group', $._expression),
-            repeat($._statement_line),
+            repeat($.statement_line),
             ci('next')
         ),
 
@@ -253,7 +253,7 @@ module.exports = grammar({
             // `Do ... Loop While/Until condition` has precedence to resolve ambiguity
             prec(1, seq(
                 ci('do'),
-                repeat($._statement_line),
+                repeat($.statement_line),
                 ci('loop'),
                 field('loop_type', choice(ci('while'), ci('until'))),
                 field('condition', $._expression)
@@ -265,7 +265,7 @@ module.exports = grammar({
                     field('loop_type', choice(ci('while'), ci('until'))),
                     field('condition', $._expression)
                 )),
-                repeat($._statement_line),
+                repeat($.statement_line),
                 ci('loop')
             )
         ),
@@ -273,7 +273,7 @@ module.exports = grammar({
         while_wend_statement: $ => seq(
             ci('while'),
             field('condition', $._expression),
-            repeat($._statement_line),
+            repeat($.statement_line),
             ci('wend')
         ),
 
@@ -296,12 +296,12 @@ module.exports = grammar({
             ci('class'),
             field('name', $.identifier),
             $._terminator,
-            repeat(seq($._class_statement_group, $._terminator)),
+            repeat(seq($.class_statement_group, $._terminator)),
             ci('end'),
             ci('class')
         ),
 
-        _class_statement_group: $ => seq(
+        class_statement_group: $ => seq(
             $._class_statement,
             repeat(seq(':', $._class_statement))
         ),
@@ -326,9 +326,9 @@ module.exports = grammar({
             ci('get'),
             field('name', $.identifier),
             '(',
-            field('parameters', optional($._parameter_list)),
+            field('parameters', optional($.parameter_list)),
             ')',
-            repeat($._statement_line),
+            repeat($.statement_line),
             ci('end'),
             ci('property')
         ),
@@ -342,9 +342,9 @@ module.exports = grammar({
             ci('let'),
             field('name', $.identifier),
             '(',
-            field('parameters', $._parameter_list),
+            field('parameters', $.parameter_list),
             ')',
-            repeat($._statement_line),
+            repeat($.statement_line),
             ci('end'),
             ci('property')
         ),
@@ -358,9 +358,9 @@ module.exports = grammar({
             ci('set'),
             field('name', $.identifier),
             '(',
-            field('parameters', $._parameter_list),
+            field('parameters', $.parameter_list),
             ')',
-            repeat($._statement_line),
+            repeat($.statement_line),
             ci('end'),
             ci('property')
         ),
@@ -376,18 +376,18 @@ module.exports = grammar({
 
         case_clause: $ => seq(
             ci('case'),
-            $._case_expression_list,
+            $.case_expression_list,
             $._terminator,
-            repeat($._statement_line)
+            repeat($.statement_line)
         ),
 
         case_else_clause: $ => seq(
             ci('case'), ci('else'),
             $._terminator,
-            repeat($._statement_line)
+            repeat($.statement_line)
         ),
 
-        _case_expression_list: $ => seq(
+        case_expression_list: $ => seq(
             $._case_expression,
             repeat(seq(',', $._case_expression))
         ),
