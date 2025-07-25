@@ -48,10 +48,7 @@ module.exports = grammar({
         // An expression that is also a valid l-value creates an ambiguity
         // when followed by an equals sign (assignment vs. comparison).
         [$._expression, $._lvalue],
-        [$._primary_expression, $._lvalue],
-
-        // An implicit call `foo bar` can be ambiguous with `foo` being an l-value
-        [$.implicit_call_expression, $._lvalue],
+        [$._primary_expression, $._lvalue]
     ],
 
     supertypes: $ => [
@@ -109,6 +106,7 @@ module.exports = grammar({
             $.set_statement,
             $.call_statement,
             $.expression_statement,
+            $.implicit_call_statement,
         ),
 
         // Statements
@@ -474,7 +472,6 @@ module.exports = grammar({
 
         _expression: $ => choice(
             $.assignment_expression,
-            $.implicit_call_expression,
             $.unary_expression,
             $.binary_expression,
             $.parenthesized_expression,
@@ -490,7 +487,7 @@ module.exports = grammar({
             field('right', $._expression)
         )),
 
-        implicit_call_expression: $ => prec(-1, seq(
+        implicit_call_statement: $ => prec(-1, seq(
             field('function', choice($.identifier, $.member_expression)),
             field('arguments', $.argument_list)
         )),
