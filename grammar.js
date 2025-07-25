@@ -39,8 +39,7 @@ module.exports = grammar({
         ['exponent'],
         [
             'member',
-            'call',
-            $._primary_expression,
+            'call'
         ]
     ],
 
@@ -463,6 +462,7 @@ module.exports = grammar({
         _lvalue: $ => choice(
             $.identifier,
             $.member_expression,
+            $.unqualified_member_expression,
             // For array/property setters
             $.call_expression
         ),
@@ -478,13 +478,13 @@ module.exports = grammar({
             $.unary_expression,
             $.binary_expression,
             $.parenthesized_expression,
-            $._primary_expression,
+            $.member_expression,
+            $.call_expression,
+            $._primary_expression
         ),
 
         _primary_expression: $ => choice(
-            $.member_expression,
             $.unqualified_member_expression,
-            $.call_expression,
             $.identifier,
             $.string_literal,
             $.number_literal,
@@ -501,14 +501,14 @@ module.exports = grammar({
             field('property', $.identifier)
         )),
 
-        member_expression: $ => prec('member', seq(
-            field('object', $._primary_expression),
+        member_expression: $ => prec.left('member', seq(
+            field('object', $._expression),
             '.',
             field('property', $.identifier)
         )),
 
-        call_expression: $ => prec('call', seq(
-            field('function', $._primary_expression),
+        call_expression: $ => prec.left('call', seq(
+            field('function', $._expression),
             '(',
             field('arguments', optional($._argument_list)),
             ')'
