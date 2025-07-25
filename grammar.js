@@ -45,10 +45,13 @@ module.exports = grammar({
     ],
 
     conflicts: $ => [
+        // Ambiguity between a parenthesized call `foo(bar)` and an
+        // implicit call with a parenthesized argument `foo (bar)`.
+        [$.call_expression, $.implicit_call_statement],
+
         // An expression that is also a valid l-value creates an ambiguity
         // when followed by an equals sign (assignment vs. comparison).
         [$._expression, $._lvalue],
-        [$._primary_expression, $._lvalue]
     ],
 
     supertypes: $ => [
@@ -486,7 +489,7 @@ module.exports = grammar({
         )),
 
         implicit_call_statement: $ => prec(-1, seq(
-            field('function', choice($.identifier, $.member_expression)),
+            field('function', choice($.identifier, $.member_expression, $.unqualified_member_expression)),
             field('arguments', $.argument_list)
         )),
 
