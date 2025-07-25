@@ -45,8 +45,14 @@ module.exports = grammar({
     ],
 
     conflicts: $ => [
+        // An implicit call `foo bar` can be ambiguous with `foo` being an l-value
         [$.implicit_call_expression, $._lvalue],
+
+        // An expression that is also a valid l-value creates an ambiguity
+        // when followed by an equals sign.
         [$._primary_expression, $._lvalue],
+        [$.member_expression, $._lvalue],
+        [$.call_expression, $._lvalue],
     ],
 
     supertypes: $ => [
