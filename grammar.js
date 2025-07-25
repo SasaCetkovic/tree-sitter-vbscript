@@ -137,7 +137,7 @@ module.exports = grammar({
                 $.call_expression,
                 seq(
                     field('function', choice($.identifier, $.member_expression)),
-                    optional(field('arguments', $._argument_list))
+                    optional(field('arguments', $.argument_list))
                 )
             )
         ),
