@@ -57,6 +57,10 @@ module.exports = grammar({
         // Ambiguity between an argument list with a single parenthesized
         // expression `((foo))` and an argument list with a single item `(foo)`.
         [$.parenthesized_expression, $.argument_list],
+
+        // Ambiguity between a member expression `foo.bar` and an unqualified
+        // member expression `.bar` (valid within `With` blocks).
+        [$.unqualified_member_expression, $.member_expression],
     ],
 
     supertypes: $ => [
