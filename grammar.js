@@ -45,7 +45,8 @@ module.exports = grammar({
     ],
 
     conflicts: $ => [
-        [$.implicit_call_expression, $._lvalue]
+        [$.implicit_call_expression, $._lvalue],
+        [$._primary_expression, $._lvalue],
     ],
 
     supertypes: $ => [
