@@ -12,8 +12,7 @@ End With
   (statement_line
     (statement_group
       (with_statement
-        (identifier)
-        (statement_line)))))
+        (identifier)))))
 
 ==================
 With property assignment
@@ -31,11 +30,10 @@ End With
     (statement_group
       (with_statement
         (identifier)
-        (statement_line)
         (statement_line
           (statement_group
             (expression_statement
-              (binary_expression
+              (assignment_expression
                 (unqualified_member_expression
                   (identifier))
                 (string_literal)))))))))
@@ -56,7 +54,6 @@ End With
     (statement_group
       (with_statement
         (identifier)
-        (statement_line)
         (statement_line
           (statement_group
             (expression_statement
@@ -79,17 +76,16 @@ End With
     (statement_group
       (with_statement
         (identifier)
-        (statement_line)
         (statement_line
           (statement_group
             (expression_statement
-              (call_expression
-                (binary_expression
-                  (identifier)
+              (assignment_expression
+                (identifier)
+                (call_expression
                   (unqualified_member_expression
-                    (identifier)))
-                (argument_list
-                  (identifier))))))))))
+                    (identifier))
+                  (argument_list
+                    (identifier)))))))))))
 
 ==================
 Member expression outside With
@@ -104,11 +100,11 @@ x = obj.Name
   (statement_line
     (statement_group
       (expression_statement
-        (member_expression
-          (binary_expression
+        (assignment_expression
+          (identifier)
+          (member_expression
             (identifier)
-            (identifier))
-          (identifier))))))
+            (identifier)))))))
 
 ==================
 Mixed case With
@@ -124,5 +120,4 @@ End With
   (statement_line
     (statement_group
       (with_statement
-        (identifier)
-        (statement_line)))))
+        (identifier)))))

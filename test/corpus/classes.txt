@@ -55,8 +55,7 @@ End Class
         (identifier)
         (class_statement_group
           (property_get_statement
-            (identifier)
-            (statement_line)))))))
+            (identifier)))))))
 
 ==================
 Class with Property Let
@@ -80,8 +79,7 @@ End Class
             (identifier)
             (parameter_list
               (parameter
-                (identifier)))
-            (statement_line)))))))
+                (identifier)))))))))
 
 ==================
 Class with Property Set
@@ -105,8 +103,7 @@ End Class
             (identifier)
             (parameter_list
               (parameter
-                (identifier)))
-            (statement_line)))))))
+                (identifier)))))))))
 
 ==================
 Class with Public and Private methods
@@ -129,12 +126,10 @@ End Class
         (identifier)
         (class_statement_group
           (sub_declaration
-            (identifier)
-            (statement_line)))
+            (identifier)))
         (class_statement_group
           (function_declaration
-            (identifier)
-            (statement_line)))))))
+            (identifier)))))))
 
 ==================
 Default Property Get
@@ -158,8 +153,7 @@ End Class
             (identifier)
             (parameter_list
               (parameter
-                (identifier)))
-            (statement_line)))))))
+                (identifier)))))))))
 
 ==================
 Class with multiple members
@@ -196,16 +190,13 @@ End Class
                 (identifier)))))
         (class_statement_group
           (property_get_statement
-            (identifier)
-            (statement_line)))
+            (identifier)))
         (class_statement_group
           (property_let_statement
             (identifier)
             (parameter_list
               (parameter
-                (identifier)))
-            (statement_line)))
+                (identifier)))))
         (class_statement_group
           (sub_declaration
-            (identifier)
-            (statement_line)))))))
+            (identifier)))))))

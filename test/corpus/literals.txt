@@ -11,7 +11,7 @@ x = "hello world"
   (statement_line
     (statement_group
       (expression_statement
-        (binary_expression
+        (assignment_expression
           (identifier)
           (string_literal))))))
 
@@ -28,7 +28,7 @@ x = ""
   (statement_line
     (statement_group
       (expression_statement
-        (binary_expression
+        (assignment_expression
           (identifier)
           (string_literal))))))
 
@@ -45,7 +45,7 @@ x = "He said ""hi"""
   (statement_line
     (statement_group
       (expression_statement
-        (binary_expression
+        (assignment_expression
           (identifier)
           (string_literal))))))
 
@@ -62,7 +62,7 @@ x = 42
   (statement_line
     (statement_group
       (expression_statement
-        (binary_expression
+        (assignment_expression
           (identifier)
           (number_literal))))))
 
@@ -79,7 +79,7 @@ x = 3.14
   (statement_line
     (statement_group
       (expression_statement
-        (binary_expression
+        (assignment_expression
           (identifier)
           (number_literal))))))
 
@@ -96,10 +96,9 @@ x = 1 ' this is a comment
   (statement_line
     (statement_group
       (expression_statement
-        (binary_expression
+        (assignment_expression
           (identifier)
-          (number_literal)))
-      )
+          (number_literal))))
     (comment)))
 
 ==================
@@ -130,12 +129,12 @@ x = 1 + _
   (statement_line
     (statement_group
       (expression_statement
-        (binary_expression
+        (assignment_expression
+          (identifier)
           (binary_expression
-            (identifier)
-            (number_literal))
-          (line_continuation)
-          (number_literal))))))
+            (number_literal)
+            (line_continuation)
+            (number_literal)))))))
 
 ==================
 Simple identifier
@@ -150,7 +149,7 @@ myVariable = 1
   (statement_line
     (statement_group
       (expression_statement
-        (binary_expression
+        (assignment_expression
           (identifier)
           (number_literal))))))
 
@@ -167,7 +166,7 @@ _myVar = 1
   (statement_line
     (statement_group
       (expression_statement
-        (binary_expression
+        (assignment_expression
           (identifier)
           (number_literal))))))
 
@@ -184,6 +183,209 @@ myVar123 = 1
   (statement_line
     (statement_group
       (expression_statement
-        (binary_expression
+        (assignment_expression
           (identifier)
           (number_literal))))))
+
+==================
+Boolean literal True
+==================
+
+x = True
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (assignment_expression
+          (identifier)
+          (boolean_literal))))))
+
+==================
+Boolean literal False
+==================
+
+x = False
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (assignment_expression
+          (identifier)
+          (boolean_literal))))))
+
+==================
+Nothing literal
+==================
+
+Set obj = Nothing
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (set_statement
+        (identifier)
+        (nothing)))))
+
+==================
+Empty literal
+==================
+
+x = Empty
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (assignment_expression
+          (identifier)
+          (empty))))))
+
+==================
+Null literal
+==================
+
+x = Null
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (assignment_expression
+          (identifier)
+          (null))))))
+
+==================
+Hex literal uppercase H
+==================
+
+x = &HFF
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (assignment_expression
+          (identifier)
+          (hex_literal))))))
+
+==================
+Hex literal large value
+==================
+
+x = &H80000000
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (assignment_expression
+          (identifier)
+          (hex_literal))))))
+
+==================
+Hex literal lowercase h
+==================
+
+x = &hff
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (assignment_expression
+          (identifier)
+          (hex_literal))))))
+
+==================
+Octal literal
+==================
+
+x = &O77
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (assignment_expression
+          (identifier)
+          (octal_literal))))))
+
+==================
+Octal literal lowercase o
+==================
+
+x = &o0
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (assignment_expression
+          (identifier)
+          (octal_literal))))))
+
+==================
+Date literal simple
+==================
+
+x = #1/1/2000#
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (assignment_expression
+          (identifier)
+          (date_literal))))))
+
+==================
+Date literal with time
+==================
+
+x = #12/31/1999 11:59:59 PM#
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (assignment_expression
+          (identifier)
+          (date_literal))))))

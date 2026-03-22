@@ -11,12 +11,12 @@ x = foo(bar)
   (statement_line
     (statement_group
       (expression_statement
-        (call_expression
-          (binary_expression
+        (assignment_expression
+          (identifier)
+          (call_expression
             (identifier)
-            (identifier))
-          (argument_list
-            (identifier)))))))
+            (argument_list
+              (identifier))))))))
 
 ==================
 Conflict 1b: implicit_call_statement with multiple arguments
@@ -97,7 +97,7 @@ x = (a)
   (statement_line
     (statement_group
       (expression_statement
-        (binary_expression
+        (assignment_expression
           (identifier)
           (parenthesized_expression
             (identifier)))))))
@@ -137,11 +137,10 @@ End With
     (statement_group
       (with_statement
         (identifier)
-        (statement_line)
         (statement_line
           (statement_group
             (expression_statement
-              (binary_expression
+              (assignment_expression
                 (unqualified_member_expression
                   (identifier))
                 (string_literal)))))))))
@@ -159,11 +158,11 @@ x = obj.Name
   (statement_line
     (statement_group
       (expression_statement
-        (member_expression
-          (binary_expression
+        (assignment_expression
+          (identifier)
+          (member_expression
             (identifier)
-            (identifier))
-          (identifier))))))
+            (identifier)))))))
 
 ==================
 Conflict 5: implicit call with one argument no parens

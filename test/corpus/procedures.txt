@@ -12,8 +12,7 @@ End Sub
   (statement_line
     (statement_group
       (sub_declaration
-        (identifier)
-        (statement_line)))))
+        (identifier)))))
 
 ==================
 Simple Function
@@ -29,8 +28,7 @@ End Function
   (statement_line
     (statement_group
       (function_declaration
-        (identifier)
-        (statement_line)))))
+        (identifier)))))
 
 ==================
 Sub with parameters
@@ -51,8 +49,7 @@ End Sub
           (parameter
             (identifier))
           (parameter
-            (identifier)))
-        (statement_line)))))
+            (identifier)))))))
 
 ==================
 Function with ByVal and ByRef parameters
@@ -73,8 +70,7 @@ End Function
           (parameter
             (identifier))
           (parameter
-            (identifier)))
-        (statement_line)))))
+            (identifier)))))))
 
 ==================
 Optional parameter
@@ -93,8 +89,7 @@ End Sub
         (identifier)
         (parameter_list
           (parameter
-            (identifier)))
-        (statement_line)))))
+            (identifier)))))))
 
 ==================
 Array parameter
@@ -113,8 +108,7 @@ End Sub
         (identifier)
         (parameter_list
           (parameter
-            (identifier)))
-        (statement_line)))))
+            (identifier)))))))
 
 ==================
 Public Sub
@@ -130,8 +124,7 @@ End Sub
   (statement_line
     (statement_group
       (sub_declaration
-        (identifier)
-        (statement_line)))))
+        (identifier)))))
 
 ==================
 Private Function
@@ -147,8 +140,7 @@ End Function
   (statement_line
     (statement_group
       (function_declaration
-        (identifier)
-        (statement_line)))))
+        (identifier)))))
 
 ==================
 Mixed case Function keyword
@@ -164,8 +156,7 @@ End Function
   (statement_line
     (statement_group
       (function_declaration
-        (identifier)
-        (statement_line)))))
+        (identifier)))))
 
 ==================
 Sub with body
@@ -266,7 +257,6 @@ End Sub
     (statement_group
       (sub_declaration
         (identifier)
-        (statement_line)
         (statement_line
           (statement_group
             (exit_statement)))))))
@@ -287,7 +277,6 @@ End Function
     (statement_group
       (function_declaration
         (identifier)
-        (statement_line)
         (statement_line
           (statement_group
             (exit_statement)))))))
@@ -307,7 +296,6 @@ Loop
   (statement_line
     (statement_group
       (do_loop_statement
-        (statement_line)
         (statement_line
           (statement_group
             (exit_statement)))))))
@@ -330,7 +318,6 @@ Next
         (identifier)
         (number_literal)
         (number_literal)
-        (statement_line)
         (statement_line
           (statement_group
             (exit_statement)))))))
@@ -351,7 +338,6 @@ End Sub
     (statement_group
       (sub_declaration
         (identifier)
-        (statement_line)
         (statement_line
           (statement_group
             (exit_statement)))))))
@@ -371,7 +357,7 @@ Line label numeric
       (number_literal))
     (statement_group
       (expression_statement
-        (binary_expression
+        (assignment_expression
           (identifier)
           (number_literal))))))
 
@@ -390,7 +376,7 @@ MyLabel: x = 1
       (identifier))
     (statement_group
       (expression_statement
-        (binary_expression
+        (assignment_expression
           (identifier)
           (number_literal))))))
 
@@ -407,10 +393,10 @@ x = 1 : y = 2
   (statement_line
     (statement_group
       (expression_statement
-        (binary_expression
+        (assignment_expression
           (identifier)
           (number_literal)))
       (expression_statement
-        (binary_expression
+        (assignment_expression
           (identifier)
           (number_literal))))))

@@ -257,3 +257,20 @@ Set obj = CreateObject("Scripting.FileSystemObject")
           (identifier)
           (argument_list
             (string_literal)))))))
+
+==================
+Option Explicit statement
+==================
+
+Option Explicit
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (implicit_call_statement
+        (identifier)
+        (argument_list
+          (identifier))))))

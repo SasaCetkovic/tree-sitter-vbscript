@@ -16,7 +16,7 @@ If x > 0 Then y = 1
           (number_literal))
         (statement_group
           (expression_statement
-            (binary_expression
+            (assignment_expression
               (identifier)
               (number_literal))))))))
 
@@ -38,12 +38,12 @@ If x > 0 Then y = 1 Else y = 0
           (number_literal))
         (statement_group
           (expression_statement
-            (binary_expression
+            (assignment_expression
               (identifier)
               (number_literal))))
         (statement_group
           (expression_statement
-            (binary_expression
+            (assignment_expression
               (identifier)
               (number_literal))))))))
 
@@ -65,7 +65,7 @@ iF x > 0 tHeN y = 1
           (number_literal))
         (statement_group
           (expression_statement
-            (binary_expression
+            (assignment_expression
               (identifier)
               (number_literal))))))))
 
@@ -87,11 +87,11 @@ If x > 0 Then y = 1 : z = 2
           (number_literal))
         (statement_group
           (expression_statement
-            (binary_expression
+            (assignment_expression
               (identifier)
               (number_literal)))))
       (expression_statement
-        (binary_expression
+        (assignment_expression
           (identifier)
           (number_literal))))))
 
@@ -122,7 +122,7 @@ End Select
           (statement_line
             (statement_group
               (expression_statement
-                (binary_expression
+                (assignment_expression
                   (identifier)
                   (string_literal))))))
         (case_clause
@@ -131,14 +131,14 @@ End Select
           (statement_line
             (statement_group
               (expression_statement
-                (binary_expression
+                (assignment_expression
                   (identifier)
                   (string_literal))))))
         (case_else_clause
           (statement_line
             (statement_group
               (expression_statement
-                (binary_expression
+                (assignment_expression
                   (identifier)
                   (string_literal))))))))))
 
@@ -167,7 +167,7 @@ End Select
           (statement_line
             (statement_group
               (expression_statement
-                (binary_expression
+                (assignment_expression
                   (identifier)
                   (string_literal))))))))))
 
@@ -198,7 +198,7 @@ End Select
           (statement_line
             (statement_group
               (expression_statement
-                (binary_expression
+                (assignment_expression
                   (identifier)
                   (string_literal))))))))))
 
@@ -228,7 +228,7 @@ End Select
           (statement_line
             (statement_group
               (expression_statement
-                (binary_expression
+                (assignment_expression
                   (identifier)
                   (string_literal))))))))))
 
@@ -273,6 +273,114 @@ End Select
           (statement_line
             (statement_group
               (expression_statement
-                (binary_expression
+                (assignment_expression
+                  (identifier)
+                  (number_literal))))))))))
+
+==================
+Block If simple
+==================
+
+If x > 0 Then
+  y = 1
+End If
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (block_if_statement
+        (binary_expression
+          (identifier)
+          (number_literal))
+        (statement_line
+          (statement_group
+            (expression_statement
+              (assignment_expression
+                (identifier)
+                (number_literal)))))))))
+
+==================
+Block If with ElseIf
+==================
+
+If x = 1 Then
+  a = 1
+ElseIf x = 2 Then
+  a = 2
+End If
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (block_if_statement
+        (binary_expression
+          (identifier)
+          (number_literal))
+        (statement_line
+          (statement_group
+            (expression_statement
+              (assignment_expression
+                (identifier)
+                (number_literal)))))
+        (elseif_clause
+          (binary_expression
+            (identifier)
+            (number_literal))
+          (statement_line
+            (statement_group
+              (expression_statement
+                (assignment_expression
+                  (identifier)
+                  (number_literal))))))))))
+
+==================
+Block If with ElseIf and Else
+==================
+
+If x = 1 Then
+  a = 1
+ElseIf x = 2 Then
+  a = 2
+Else
+  a = 3
+End If
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (block_if_statement
+        (binary_expression
+          (identifier)
+          (number_literal))
+        (statement_line
+          (statement_group
+            (expression_statement
+              (assignment_expression
+                (identifier)
+                (number_literal)))))
+        (elseif_clause
+          (binary_expression
+            (identifier)
+            (number_literal))
+          (statement_line
+            (statement_group
+              (expression_statement
+                (assignment_expression
+                  (identifier)
+                  (number_literal))))))
+        (else_clause
+          (statement_line
+            (statement_group
+              (expression_statement
+                (assignment_expression
                   (identifier)
                   (number_literal))))))))))

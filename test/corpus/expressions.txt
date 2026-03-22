@@ -28,7 +28,7 @@ x = (1 + 2)
   (statement_line
     (statement_group
       (expression_statement
-        (binary_expression
+        (assignment_expression
           (identifier)
           (parenthesized_expression
             (binary_expression
@@ -48,7 +48,7 @@ x = -1
   (statement_line
     (statement_group
       (expression_statement
-        (binary_expression
+        (assignment_expression
           (identifier)
           (unary_expression
             (number_literal)))))))
@@ -66,7 +66,7 @@ x = Not x
   (statement_line
     (statement_group
       (expression_statement
-        (binary_expression
+        (assignment_expression
           (identifier)
           (unary_expression
             (identifier)))))))
@@ -84,18 +84,18 @@ x = f(g(h(1)))
   (statement_line
     (statement_group
       (expression_statement
-        (call_expression
-          (binary_expression
+        (assignment_expression
+          (identifier)
+          (call_expression
             (identifier)
-            (identifier))
-          (argument_list
-            (call_expression
-              (identifier)
-              (argument_list
-                (call_expression
-                  (identifier)
-                  (argument_list
-                    (number_literal)))))))))))
+            (argument_list
+              (call_expression
+                (identifier)
+                (argument_list
+                  (call_expression
+                    (identifier)
+                    (argument_list
+                      (number_literal))))))))))))
 
 ==================
 Member chain
@@ -110,13 +110,13 @@ x = a.b.c
   (statement_line
     (statement_group
       (expression_statement
-        (member_expression
+        (assignment_expression
+          (identifier)
           (member_expression
-            (binary_expression
+            (member_expression
               (identifier)
               (identifier))
-            (identifier))
-          (identifier))))))
+            (identifier)))))))
 
 ==================
 And operator
@@ -131,11 +131,11 @@ x = a And b
   (statement_line
     (statement_group
       (expression_statement
-        (binary_expression
+        (assignment_expression
+          (identifier)
           (binary_expression
             (identifier)
-            (identifier))
-          (identifier))))))
+            (identifier)))))))
 
 ==================
 Or operator
@@ -150,11 +150,11 @@ x = a Or b
   (statement_line
     (statement_group
       (expression_statement
-        (binary_expression
+        (assignment_expression
+          (identifier)
           (binary_expression
             (identifier)
-            (identifier))
-          (identifier))))))
+            (identifier)))))))
 
 ==================
 Mixed case And operator
@@ -169,11 +169,11 @@ x = a aNd b
   (statement_line
     (statement_group
       (expression_statement
-        (binary_expression
+        (assignment_expression
+          (identifier)
           (binary_expression
             (identifier)
-            (identifier))
-          (identifier))))))
+            (identifier)))))))
 
 ==================
 Concatenation operator
@@ -188,11 +188,11 @@ x = a & b
   (statement_line
     (statement_group
       (expression_statement
-        (binary_expression
+        (assignment_expression
+          (identifier)
           (binary_expression
             (identifier)
-            (identifier))
-          (identifier))))))
+            (identifier)))))))
 
 ==================
 Arithmetic operators
@@ -207,11 +207,11 @@ x = a + b
   (statement_line
     (statement_group
       (expression_statement
-        (binary_expression
+        (assignment_expression
+          (identifier)
           (binary_expression
             (identifier)
-            (identifier))
-          (identifier))))))
+            (identifier)))))))
 
 ==================
 Member expression as argument
@@ -287,11 +287,11 @@ x = a <> b
   (statement_line
     (statement_group
       (expression_statement
-        (binary_expression
+        (assignment_expression
+          (identifier)
           (binary_expression
             (identifier)
-            (identifier))
-          (identifier))))))
+            (identifier)))))))
 
 ==================
 Imp operator
@@ -306,11 +306,11 @@ x = a Imp b
   (statement_line
     (statement_group
       (expression_statement
-        (binary_expression
+        (assignment_expression
+          (identifier)
           (binary_expression
             (identifier)
-            (identifier))
-          (identifier))))))
+            (identifier)))))))
 
 ==================
 Eqv operator
@@ -325,11 +325,11 @@ x = a Eqv b
   (statement_line
     (statement_group
       (expression_statement
-        (binary_expression
+        (assignment_expression
+          (identifier)
           (binary_expression
             (identifier)
-            (identifier))
-          (identifier))))))
+            (identifier)))))))
 
 ==================
 Xor operator
@@ -344,11 +344,11 @@ x = a Xor b
   (statement_line
     (statement_group
       (expression_statement
-        (binary_expression
+        (assignment_expression
+          (identifier)
           (binary_expression
             (identifier)
-            (identifier))
-          (identifier))))))
+            (identifier)))))))
 
 ==================
 Mod operator
@@ -363,11 +363,11 @@ x = a Mod b
   (statement_line
     (statement_group
       (expression_statement
-        (binary_expression
+        (assignment_expression
+          (identifier)
           (binary_expression
             (identifier)
-            (identifier))
-          (identifier))))))
+            (identifier)))))))
 
 ==================
 Integer division operator
@@ -382,11 +382,11 @@ x = a \ b
   (statement_line
     (statement_group
       (expression_statement
-        (binary_expression
+        (assignment_expression
+          (identifier)
           (binary_expression
             (identifier)
-            (identifier))
-          (identifier))))))
+            (identifier)))))))
 
 ==================
 Exponent operator
@@ -401,8 +401,103 @@ x = a ^ b
   (statement_line
     (statement_group
       (expression_statement
-        (binary_expression
+        (assignment_expression
+          (identifier)
           (binary_expression
             (identifier)
+            (identifier)))))))
+
+==================
+Assignment without Let
+==================
+
+x = 5
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (assignment_expression
+          (identifier)
+          (number_literal))))))
+
+==================
+Assignment Let and no-Let identical trees
+==================
+
+Let x = 5
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (assignment_expression
+          (identifier)
+          (number_literal))))))
+
+==================
+Comparison in If condition not broken
+==================
+
+If x = 5 Then y = 1
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (single_line_if_statement
+        condition: (binary_expression
+          left: (identifier)
+          right: (number_literal))
+        consequence: (statement_group
+          (expression_statement
+            (assignment_expression
+              left: (identifier)
+              right: (number_literal))))))))
+
+==================
+Member expression LHS assignment
+==================
+
+obj.prop = value
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (assignment_expression
+          (member_expression
+            (identifier)
             (identifier))
+          (identifier))))))
+
+==================
+Call expression LHS assignment
+==================
+
+arr(i) = value
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (assignment_expression
+          (call_expression
+            (identifier)
+            (argument_list
+              (identifier)))
           (identifier))))))

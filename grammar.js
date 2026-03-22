@@ -18,9 +18,11 @@ module.exports = grammar({
 
     extras: $ => [
         $.comment,
-        /[\s\t]/,
+        /[ \t]/,
         $.line_continuation,
     ],
+
+    word: $ => $.identifier,
 
     precedences: $ => [
         ['assignment'],
@@ -45,39 +47,13 @@ module.exports = grammar({
     ],
 
     conflicts: $ => [
-        // Ambiguity between a parenthesized call `foo(bar)` and an
-        // implicit call with a parenthesized argument `foo (bar)`.
-        [$.call_expression, $.implicit_call_statement],
-
-        // An expression that is also a valid l-value creates an ambiguity
-        // when followed by an equals sign (assignment vs. comparison).
-        [$._expression, $._lvalue],
-        [$._primary_expression, $._lvalue],
-
-        // Ambiguity between an argument list with a single parenthesized
-        // expression `((foo))` and an argument list with a single item `(foo)`.
-        [$.parenthesized_expression, $.argument_list],
-
-        // Ambiguity between a member expression `foo.bar` and an unqualified
-        // member expression `.bar` (valid within `With` blocks).
-        [$.unqualified_member_expression, $.member_expression],
-
-        // Ambiguity when an expression like `expr + expr` is followed by `(`
-        // — the parser cannot statically determine whether `(` starts a call
-        // expression on the right-hand operand or begins a parenthesized
-        // sub-expression in the surrounding context.
-        [$.call_expression, $.binary_expression, $.unary_expression],
-
-        // Ambiguity when `expr + expr` is followed by `=` — the parser cannot
-        // determine whether `=` is a comparison operator (making a new binary
-        // expression on the right operand) or closes the addition.
-        [$.binary_expression, $.unary_expression],
-
-        // Ambiguity when `expr + expr` is followed by `.` inside a With block —
-        // the parser cannot determine whether `.` starts a member_expression on
-        // the right operand (higher precedence) or is an unqualified member
-        // expression in the With block context.
-        [$.member_expression, $.binary_expression, $.unary_expression],
+        // Ambiguity between an l-value (assignment target) and a primary
+        // expression when followed by `=` — identifier and member_expression
+        // can be either. prec.dynamic(1) on assignment_expression in
+        // expression_statement resolves the ambiguity in favour of assignment
+        // at statement level.
+        [$._lvalue, $._primary_expression],
+        [$._lvalue, $._expression],
     ],
 
     supertypes: $ => [
@@ -142,6 +118,7 @@ module.exports = grammar({
         with_statement: $ => seq(
             ci('with'),
             field('object', $._expression),
+            $._terminator,
             repeat($.statement_line),
             ci('end'),
             ci('with')
@@ -186,6 +163,7 @@ module.exports = grammar({
             '(',
             field('parameters', optional($.parameter_list)),
             ')',
+            $._terminator,
             repeat($.statement_line),
             ci('end'),
             ci('function')
@@ -201,6 +179,7 @@ module.exports = grammar({
             '(',
             field('parameters', optional($.parameter_list)),
             ')',
+            $._terminator,
             repeat($.statement_line),
             ci('end'),
             ci('sub')
@@ -269,6 +248,7 @@ module.exports = grammar({
                 ci('step'),
                 field('step', $._expression)
             )),
+            $._terminator,
             repeat($.statement_line),
             ci('next')
         ),
@@ -279,6 +259,7 @@ module.exports = grammar({
             field('element', $._lvalue),
             ci('in'),
             field('group', $._expression),
+            $._terminator,
             repeat($.statement_line),
             ci('next')
         ),
@@ -287,6 +268,7 @@ module.exports = grammar({
             // `Do ... Loop While/Until condition` has precedence to resolve ambiguity
             prec(1, seq(
                 ci('do'),
+                $._terminator,
                 repeat($.statement_line),
                 ci('loop'),
                 field('loop_type', choice(ci('while'), ci('until'))),
@@ -299,6 +281,7 @@ module.exports = grammar({
                     field('loop_type', choice(ci('while'), ci('until'))),
                     field('condition', $._expression)
                 )),
+                $._terminator,
                 repeat($.statement_line),
                 ci('loop')
             )
@@ -307,6 +290,7 @@ module.exports = grammar({
         while_wend_statement: $ => seq(
             ci('while'),
             field('condition', $._expression),
+            $._terminator,
             repeat($.statement_line),
             ci('wend')
         ),
@@ -362,6 +346,7 @@ module.exports = grammar({
             '(',
             field('parameters', optional($.parameter_list)),
             ')',
+            $._terminator,
             repeat($.statement_line),
             ci('end'),
             ci('property')
@@ -378,6 +363,7 @@ module.exports = grammar({
             '(',
             field('parameters', $.parameter_list),
             ')',
+            $._terminator,
             repeat($.statement_line),
             ci('end'),
             ci('property')
@@ -394,6 +380,7 @@ module.exports = grammar({
             '(',
             field('parameters', $.parameter_list),
             ')',
+            $._terminator,
             repeat($.statement_line),
             ci('end'),
             ci('property')
@@ -495,10 +482,16 @@ module.exports = grammar({
             $.call_expression
         ),
 
-        expression_statement: $ => $._expression,
+        // Assignment is a statement-level construct, not a sub-expression.
+        // prec.dynamic(1) makes assignment win over expression_statement when
+        // the input could be either `lvalue = expr` (assignment) or
+        // `expr = expr` (comparison binary_expression).
+        expression_statement: $ => choice(
+            prec.dynamic(1, $.assignment_expression),
+            $._expression
+        ),
 
         _expression: $ => choice(
-            $.assignment_expression,
             $.unary_expression,
             $.binary_expression,
             $.parenthesized_expression,
@@ -524,6 +517,9 @@ module.exports = grammar({
             $.identifier,
             $.string_literal,
             $.number_literal,
+            $.hex_literal,
+            $.octal_literal,
+            $.date_literal,
             $.nothing,
             $.empty,
             $.null,
@@ -604,7 +600,7 @@ module.exports = grammar({
 
         rem_comment: $ => token(seq(ci('rem'), /.*/)),
 
-        line_continuation: $ => token(' _'),
+        line_continuation: $ => token(seq(' _', choice('\r\n', '\n', '\r'))),
 
         identifier: $ => /[a-zA-Z_][a-zA-Z0-9_]*/,
 
@@ -612,9 +608,22 @@ module.exports = grammar({
 
         number_literal: $ => /\d+(\.\d+)?/,
 
-        boolean_literal: $ => choice(ci('true'), ci('false')),
-        nothing: $ => ci('nothing'),
-        empty: $ => ci('empty'),
-        null: $ => ci('null'),
+        hex_literal: $ => /&[hH][0-9a-fA-F]+/,
+
+        octal_literal: $ => /&[oO][0-7]+/,
+
+        // Date/time literals use # as delimiter; content is not validated.
+        date_literal: $ => token(seq('#', /[^#\n\r]+/, '#')),
+
+        // Use token(prec(1, ...)) to give keyword literals higher lexer priority
+        // than the identifier rule (priority 0). This ensures True/False/Nothing/
+        // Empty/Null are tokenized as their specific types rather than as identifiers.
+        boolean_literal: $ => choice(
+            token(prec(1, ci('true'))),
+            token(prec(1, ci('false')))
+        ),
+        nothing: $ => token(prec(1, ci('nothing'))),
+        empty: $ => token(prec(1, ci('empty'))),
+        null: $ => token(prec(1, ci('null'))),
     }
 });
