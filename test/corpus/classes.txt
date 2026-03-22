@@ -1,0 +1,211 @@
+==================
+Empty class
+==================
+
+Class MyClass
+End Class
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (class_statement
+        (identifier)))))
+
+==================
+Class with Dim member
+==================
+
+Class MyClass
+Dim x
+End Class
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (class_statement
+        (identifier)
+        (class_statement_group
+          (declaration_statement
+            (variable_declaration
+              (declared_variable
+                (identifier)))))))))
+
+==================
+Class with Property Get
+==================
+
+Class MyClass
+Property Get Name()
+End Property
+End Class
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (class_statement
+        (identifier)
+        (class_statement_group
+          (property_get_statement
+            (identifier)
+            (statement_line)))))))
+
+==================
+Class with Property Let
+==================
+
+Class MyClass
+Property Let Name(val)
+End Property
+End Class
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (class_statement
+        (identifier)
+        (class_statement_group
+          (property_let_statement
+            (identifier)
+            (parameter_list
+              (parameter
+                (identifier)))
+            (statement_line)))))))
+
+==================
+Class with Property Set
+==================
+
+Class MyClass
+Property Set Obj(val)
+End Property
+End Class
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (class_statement
+        (identifier)
+        (class_statement_group
+          (property_set_statement
+            (identifier)
+            (parameter_list
+              (parameter
+                (identifier)))
+            (statement_line)))))))
+
+==================
+Class with Public and Private methods
+==================
+
+Class MyClass
+Public Sub MyMethod()
+End Sub
+Private Function MyFunc()
+End Function
+End Class
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (class_statement
+        (identifier)
+        (class_statement_group
+          (sub_declaration
+            (identifier)
+            (statement_line)))
+        (class_statement_group
+          (function_declaration
+            (identifier)
+            (statement_line)))))))
+
+==================
+Default Property Get
+==================
+
+Class MyClass
+Public Default Property Get Item(index)
+End Property
+End Class
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (class_statement
+        (identifier)
+        (class_statement_group
+          (property_get_statement
+            (identifier)
+            (parameter_list
+              (parameter
+                (identifier)))
+            (statement_line)))))))
+
+==================
+Class with multiple members
+==================
+
+Class MyClass
+Dim name
+Dim age
+Property Get Name()
+End Property
+Property Let Name(val)
+End Property
+Sub Initialize()
+End Sub
+End Class
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (class_statement
+        (identifier)
+        (class_statement_group
+          (declaration_statement
+            (variable_declaration
+              (declared_variable
+                (identifier)))))
+        (class_statement_group
+          (declaration_statement
+            (variable_declaration
+              (declared_variable
+                (identifier)))))
+        (class_statement_group
+          (property_get_statement
+            (identifier)
+            (statement_line)))
+        (class_statement_group
+          (property_let_statement
+            (identifier)
+            (parameter_list
+              (parameter
+                (identifier)))
+            (statement_line)))
+        (class_statement_group
+          (sub_declaration
+            (identifier)
+            (statement_line)))))))

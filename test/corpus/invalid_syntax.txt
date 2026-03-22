@@ -1,0 +1,120 @@
+==================
+Unclosed Function block
+:error
+==================
+
+Function MyFunc()
+  x = 1
+
+---
+
+==================
+Unclosed Sub block
+:error
+==================
+
+Sub MySub()
+  x = 1
+
+---
+
+==================
+Select Case without Case clause
+:error
+==================
+
+Select Case x
+  y = 1
+End Select
+
+---
+
+==================
+Unclosed For loop
+:error
+==================
+
+For i = 1 To 10
+  x = x + i
+
+---
+
+==================
+Unclosed While loop
+:error
+==================
+
+While x > 0
+  x = x - 1
+
+---
+
+==================
+Unclosed Do loop
+:error
+==================
+
+Do
+  x = x + 1
+
+---
+
+==================
+Unclosed With block
+:error
+==================
+
+With obj
+  .Name = "test"
+
+---
+
+==================
+Unclosed Class block
+:error
+==================
+
+Class MyClass
+  Dim x
+
+---
+
+==================
+Missing Then keyword
+:error
+==================
+
+If x > 0
+  y = 1
+End If
+
+---
+
+==================
+Dim without variable name
+:error
+==================
+
+Dim
+
+---
+
+==================
+Invalid operator sequence
+:error
+==================
+
+x = + * y
+
+---
+
+==================
+Malformed For loop missing To
+:error
+==================
+
+For i = 1
+  x = i
+Next
+
+---

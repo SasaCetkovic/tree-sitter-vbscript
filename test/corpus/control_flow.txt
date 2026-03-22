@@ -1,0 +1,278 @@
+==================
+Single line if
+==================
+
+If x > 0 Then y = 1
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (single_line_if_statement
+        (binary_expression
+          (identifier)
+          (number_literal))
+        (statement_group
+          (expression_statement
+            (binary_expression
+              (identifier)
+              (number_literal))))))))
+
+==================
+Single line if with else
+==================
+
+If x > 0 Then y = 1 Else y = 0
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (single_line_if_statement
+        (binary_expression
+          (identifier)
+          (number_literal))
+        (statement_group
+          (expression_statement
+            (binary_expression
+              (identifier)
+              (number_literal))))
+        (statement_group
+          (expression_statement
+            (binary_expression
+              (identifier)
+              (number_literal))))))))
+
+==================
+Single line if mixed case
+==================
+
+iF x > 0 tHeN y = 1
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (single_line_if_statement
+        (binary_expression
+          (identifier)
+          (number_literal))
+        (statement_group
+          (expression_statement
+            (binary_expression
+              (identifier)
+              (number_literal))))))))
+
+==================
+Single line if colon statements
+==================
+
+If x > 0 Then y = 1 : z = 2
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (single_line_if_statement
+        (binary_expression
+          (identifier)
+          (number_literal))
+        (statement_group
+          (expression_statement
+            (binary_expression
+              (identifier)
+              (number_literal)))))
+      (expression_statement
+        (binary_expression
+          (identifier)
+          (number_literal))))))
+
+==================
+Select Case basic
+==================
+
+Select Case x
+  Case 1
+    y = "one"
+  Case 2
+    y = "two"
+  Case Else
+    y = "other"
+End Select
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (select_case_statement
+        (identifier)
+        (case_clause
+          (case_expression_list
+            (number_literal))
+          (statement_line
+            (statement_group
+              (expression_statement
+                (binary_expression
+                  (identifier)
+                  (string_literal))))))
+        (case_clause
+          (case_expression_list
+            (number_literal))
+          (statement_line
+            (statement_group
+              (expression_statement
+                (binary_expression
+                  (identifier)
+                  (string_literal))))))
+        (case_else_clause
+          (statement_line
+            (statement_group
+              (expression_statement
+                (binary_expression
+                  (identifier)
+                  (string_literal))))))))))
+
+==================
+Select Case multiple values in one case
+==================
+
+Select Case x
+  Case 1, 2, 3
+    y = "small"
+End Select
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (select_case_statement
+        (identifier)
+        (case_clause
+          (case_expression_list
+            (number_literal)
+            (number_literal)
+            (number_literal))
+          (statement_line
+            (statement_group
+              (expression_statement
+                (binary_expression
+                  (identifier)
+                  (string_literal))))))))))
+
+==================
+Select Case range expression
+==================
+
+Select Case n
+  Case 1 To 10
+    y = "small"
+End Select
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (select_case_statement
+        (identifier)
+        (case_clause
+          (case_expression_list
+            (range_expression
+              (number_literal))
+            (range_expression)
+            (range_expression
+              (number_literal)))
+          (statement_line
+            (statement_group
+              (expression_statement
+                (binary_expression
+                  (identifier)
+                  (string_literal))))))))))
+
+==================
+Select Case Is expression
+==================
+
+Select Case n
+  Case Is > 100
+    y = "large"
+End Select
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (select_case_statement
+        (identifier)
+        (case_clause
+          (case_expression_list
+            (is_expression)
+            (is_expression)
+            (is_expression
+              (number_literal)))
+          (statement_line
+            (statement_group
+              (expression_statement
+                (binary_expression
+                  (identifier)
+                  (string_literal))))))))))
+
+==================
+Select Case empty body
+==================
+
+Select Case x
+  Case Else
+End Select
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (select_case_statement
+        (identifier)
+        (case_else_clause)))))
+
+==================
+Select Case mixed case keyword
+==================
+
+sElEcT cAsE x
+  Case 1
+    y = 1
+End Select
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (select_case_statement
+        (identifier)
+        (case_clause
+          (case_expression_list
+            (number_literal))
+          (statement_line
+            (statement_group
+              (expression_statement
+                (binary_expression
+                  (identifier)
+                  (number_literal))))))))))

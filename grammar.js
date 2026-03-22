@@ -61,6 +61,23 @@ module.exports = grammar({
         // Ambiguity between a member expression `foo.bar` and an unqualified
         // member expression `.bar` (valid within `With` blocks).
         [$.unqualified_member_expression, $.member_expression],
+
+        // Ambiguity when an expression like `expr + expr` is followed by `(`
+        // — the parser cannot statically determine whether `(` starts a call
+        // expression on the right-hand operand or begins a parenthesized
+        // sub-expression in the surrounding context.
+        [$.call_expression, $.binary_expression, $.unary_expression],
+
+        // Ambiguity when `expr + expr` is followed by `=` — the parser cannot
+        // determine whether `=` is a comparison operator (making a new binary
+        // expression on the right operand) or closes the addition.
+        [$.binary_expression, $.unary_expression],
+
+        // Ambiguity when `expr + expr` is followed by `.` inside a With block —
+        // the parser cannot determine whether `.` starts a member_expression on
+        // the right operand (higher precedence) or is an unqualified member
+        // expression in the With block context.
+        [$.member_expression, $.binary_expression, $.unary_expression],
     ],
 
     supertypes: $ => [

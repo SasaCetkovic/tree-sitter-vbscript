@@ -1,0 +1,316 @@
+' Known failures: valid VBScript syntax the grammar cannot yet parse correctly.
+' Each test uses :skip to exclude from CI.
+' References: Microsoft VBScript Language Reference
+' https://learn.microsoft.com/en-us/previous-versions/d1wf56tt(v=vs.85)
+
+==================
+Option Explicit statement
+:skip
+==================
+
+' Grammar bug: option_explicit_statement rule is never matched.
+' Option Explicit parses as implicit_call_statement instead.
+' Root cause: source_file uses optional($.option_explicit_statement) but the
+' /[\s\t]/ extras (which includes \n via \s) prevents _terminator from matching,
+' so option_explicit_statement's seq(ci('option'), ci('explicit'), $._terminator)
+' never completes. Result: parses as implicit_call_statement(option, [explicit]).
+' VBScript spec: Option Explicit forces variable declaration.
+' Fix needed: grammar.js - change /[\s\t]/ to /[ \t]/ in extras.
+
+Option Explicit
+
+---
+
+(source_file
+  (option_explicit_statement))
+
+==================
+Block If statement
+:skip
+==================
+
+' Grammar bug: block_if_statement with multi-line body parses as
+' single_line_if_statement due to /[\s\t]/ extras consuming newlines.
+' After "Then", the \n is consumed as extra whitespace, so the parser
+' treats the next line's statement as the single-line consequence.
+' VBScript spec: If...Then...End If is a block construct.
+' Fix needed: grammar.js - change /[\s\t]/ to /[ \t]/ in extras,
+' or give block_if_statement higher precedence than single_line_if_statement.
+
+If x > 0 Then
+  y = 1
+End If
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (block_if_statement
+        (binary_expression
+          (identifier)
+          (number_literal))
+        (statement_line
+          (statement_group
+            (expression_statement
+              (binary_expression
+                (identifier)
+                (number_literal)))))))))
+
+==================
+Block If with ElseIf
+:skip
+==================
+
+' Grammar bug: elseif_clause cannot be reached due to block_if_statement
+' not parsing correctly. ElseIf produces ERROR nodes.
+' VBScript spec: ElseIf is a valid clause in block If statements.
+' Fix needed: same as block_if_statement fix above.
+
+If x = 1 Then
+  a = 1
+ElseIf x = 2 Then
+  a = 2
+Else
+  a = 3
+End If
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (block_if_statement
+        (binary_expression
+          (identifier)
+          (number_literal))
+        (statement_line
+          (statement_group
+            (expression_statement
+              (binary_expression
+                (identifier)
+                (number_literal)))))
+        (elseif_clause
+          (binary_expression
+            (identifier)
+            (number_literal))
+          (statement_line
+            (statement_group
+              (expression_statement
+                (binary_expression
+                  (identifier)
+                  (number_literal))))))
+        (else_clause
+          (statement_line
+            (statement_group
+              (expression_statement
+                (binary_expression
+                  (identifier)
+                  (number_literal))))))))))
+
+==================
+Boolean literal True
+:skip
+==================
+
+' Grammar bug: True, False parse as (identifier) not (boolean_literal).
+' Root cause: /[a-zA-Z_][a-zA-Z0-9_]*/ identifier regex matches before
+' the boolean_literal rule because there is no `word: $ => $.identifier`
+' declaration to tell tree-sitter that boolean_literal keywords are reserved.
+' VBScript spec: True and False are boolean literals.
+' Fix needed: add `word: $ => $.identifier` to grammar.js.
+
+x = True
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (binary_expression
+          (identifier)
+          (boolean_literal))))))
+
+==================
+Boolean literal False
+:skip
+==================
+
+' Grammar bug: same as True - parses as (identifier).
+' VBScript spec: False is a boolean literal.
+
+x = False
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (binary_expression
+          (identifier)
+          (boolean_literal))))))
+
+==================
+Nothing literal
+:skip
+==================
+
+' Grammar bug: Nothing parses as (identifier) not (nothing).
+' Root cause: same as boolean_literal - no `word` declaration.
+' VBScript spec: Nothing is used to disassociate an object variable from any object.
+' Fix needed: add `word: $ => $.identifier` to grammar.js.
+
+Set obj = Nothing
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (set_statement
+        (identifier)
+        (nothing)))))
+
+==================
+Empty literal
+:skip
+==================
+
+' Grammar bug: Empty parses as (identifier) not (empty).
+' VBScript spec: Empty indicates an uninitialized variable value.
+' Fix needed: add `word: $ => $.identifier` to grammar.js.
+
+x = Empty
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (binary_expression
+          (identifier)
+          (empty))))))
+
+==================
+Null literal
+:skip
+==================
+
+' Grammar bug: Null parses as (identifier) not (null).
+' VBScript spec: Null indicates a variable contains no valid data.
+' Fix needed: add `word: $ => $.identifier` to grammar.js.
+
+x = Null
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (binary_expression
+          (identifier)
+          (null))))))
+
+==================
+Assignment expression without Let
+:skip
+==================
+
+' Grammar bug: x = 5 parses as binary_expression (comparison =) not
+' assignment_expression. Only `Let x = 5` (with explicit Let keyword)
+' correctly produces assignment_expression.
+' VBScript spec: Assignment without Let is valid and common.
+' Root cause: GLR ambiguity between assignment_expression and binary_expression
+' for the = operator. binary_expression wins due to conflict resolution.
+' Fix needed: Resolve GLR conflict in grammar.js to prefer assignment_expression
+' when the left operand is a valid _lvalue.
+
+x = 5
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (assignment_expression
+          (identifier)
+          (number_literal))))))
+
+==================
+Hex literal
+:skip
+==================
+
+' Grammar not implemented: hex literals (&HFF) are not in the grammar.
+' VBScript spec section: Numeric Literals - &H prefix for hexadecimal.
+' Fix needed: add hex_literal rule to grammar.js.
+
+x = &HFF
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (binary_expression
+          (identifier)
+          (number_literal))))))
+
+==================
+Octal literal
+:skip
+==================
+
+' Grammar not implemented: octal literals (&O77) are not in the grammar.
+' VBScript spec section: Numeric Literals - &O prefix for octal.
+' Fix needed: add octal_literal rule to grammar.js.
+
+x = &O77
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (binary_expression
+          (identifier)
+          (number_literal))))))
+
+==================
+Date literal
+:skip
+==================
+
+' Grammar not implemented: date/time literals (#1/1/2000#) are not in the grammar.
+' VBScript spec section: Date/Time Literals - # delimiter.
+' Fix needed: add date_literal rule to grammar.js.
+
+x = #1/1/2000#
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (binary_expression
+          (identifier)
+          (date_literal))))))

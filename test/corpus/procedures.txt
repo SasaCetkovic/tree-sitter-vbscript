@@ -1,0 +1,416 @@
+==================
+Simple Sub
+==================
+
+Sub MySub()
+End Sub
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (sub_declaration
+        (identifier)
+        (statement_line)))))
+
+==================
+Simple Function
+==================
+
+Function MyFunc()
+End Function
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (function_declaration
+        (identifier)
+        (statement_line)))))
+
+==================
+Sub with parameters
+==================
+
+Sub MySub(x, y)
+End Sub
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (sub_declaration
+        (identifier)
+        (parameter_list
+          (parameter
+            (identifier))
+          (parameter
+            (identifier)))
+        (statement_line)))))
+
+==================
+Function with ByVal and ByRef parameters
+==================
+
+Function MyFunc(ByVal a, ByRef b)
+End Function
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (function_declaration
+        (identifier)
+        (parameter_list
+          (parameter
+            (identifier))
+          (parameter
+            (identifier)))
+        (statement_line)))))
+
+==================
+Optional parameter
+==================
+
+Sub MySub(Optional msg)
+End Sub
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (sub_declaration
+        (identifier)
+        (parameter_list
+          (parameter
+            (identifier)))
+        (statement_line)))))
+
+==================
+Array parameter
+==================
+
+Sub MySub(arr())
+End Sub
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (sub_declaration
+        (identifier)
+        (parameter_list
+          (parameter
+            (identifier)))
+        (statement_line)))))
+
+==================
+Public Sub
+==================
+
+Public Sub MySub()
+End Sub
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (sub_declaration
+        (identifier)
+        (statement_line)))))
+
+==================
+Private Function
+==================
+
+Private Function MyFunc()
+End Function
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (function_declaration
+        (identifier)
+        (statement_line)))))
+
+==================
+Mixed case Function keyword
+==================
+
+FuNcTiOn MyFunc()
+End Function
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (function_declaration
+        (identifier)
+        (statement_line)))))
+
+==================
+Sub with body
+==================
+
+Sub Greet(name)
+  WScript.Echo "Hello " & name
+End Sub
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (sub_declaration
+        (identifier)
+        (parameter_list
+          (parameter
+            (identifier)))
+        (statement_line
+          (statement_group
+            (implicit_call_statement
+              (member_expression
+                (identifier)
+                (identifier))
+              (argument_list
+                (binary_expression
+                  (string_literal)
+                  (identifier))))))))))
+
+==================
+Call statement
+==================
+
+Call MySub()
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (call_statement
+        (call_expression
+          (identifier))))))
+
+==================
+Call statement with arguments
+==================
+
+Call MySub(1, 2)
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (call_statement
+        (call_expression
+          (identifier)
+          (argument_list
+            (number_literal)
+            (number_literal)))))))
+
+==================
+Implicit call statement
+==================
+
+MySub 1, 2
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (implicit_call_statement
+        (identifier)
+        (argument_list
+          (number_literal)
+          (number_literal))))))
+
+==================
+Exit Sub
+==================
+
+Sub MySub()
+Exit Sub
+End Sub
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (sub_declaration
+        (identifier)
+        (statement_line)
+        (statement_line
+          (statement_group
+            (exit_statement)))))))
+
+==================
+Exit Function
+==================
+
+Function MyFunc()
+Exit Function
+End Function
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (function_declaration
+        (identifier)
+        (statement_line)
+        (statement_line
+          (statement_group
+            (exit_statement)))))))
+
+==================
+Exit Do
+==================
+
+Do
+Exit Do
+Loop
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (do_loop_statement
+        (statement_line)
+        (statement_line
+          (statement_group
+            (exit_statement)))))))
+
+==================
+Exit For
+==================
+
+For i = 1 To 10
+Exit For
+Next
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (for_statement
+        (identifier)
+        (number_literal)
+        (number_literal)
+        (statement_line)
+        (statement_line
+          (statement_group
+            (exit_statement)))))))
+
+==================
+Exit Property
+==================
+
+Sub MySub()
+Exit Property
+End Sub
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (sub_declaration
+        (identifier)
+        (statement_line)
+        (statement_line
+          (statement_group
+            (exit_statement)))))))
+
+==================
+Line label numeric
+==================
+
+10: x = 1
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (line_label
+      (number_literal))
+    (statement_group
+      (expression_statement
+        (binary_expression
+          (identifier)
+          (number_literal))))))
+
+==================
+Line label identifier
+==================
+
+MyLabel: x = 1
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (line_label
+      (identifier))
+    (statement_group
+      (expression_statement
+        (binary_expression
+          (identifier)
+          (number_literal))))))
+
+==================
+Statement group colon separator
+==================
+
+x = 1 : y = 2
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (binary_expression
+          (identifier)
+          (number_literal)))
+      (expression_statement
+        (binary_expression
+          (identifier)
+          (number_literal))))))

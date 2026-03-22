@@ -1,0 +1,283 @@
+==================
+For Next loop
+==================
+
+For i = 1 To 10
+  x = x + i
+Next
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (for_statement
+        (identifier)
+        (number_literal)
+        (number_literal)
+        (statement_line
+          (statement_group
+            (expression_statement
+              (binary_expression
+                (binary_expression
+                  (identifier)
+                  (identifier))
+                (identifier)))))))))
+
+==================
+For Next with Step
+==================
+
+For i = 0 To 100 Step 5
+  x = x + i
+Next
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (for_statement
+        (identifier)
+        (number_literal)
+        (number_literal)
+        (number_literal)
+        (statement_line
+          (statement_group
+            (expression_statement
+              (binary_expression
+                (binary_expression
+                  (identifier)
+                  (identifier))
+                (identifier)))))))))
+
+==================
+For Next negative step
+==================
+
+For i = 10 To 1 Step -1
+  x = x + i
+Next
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (for_statement
+        (identifier)
+        (number_literal)
+        (number_literal)
+        (unary_expression
+          (number_literal))
+        (statement_line
+          (statement_group
+            (expression_statement
+              (binary_expression
+                (binary_expression
+                  (identifier)
+                  (identifier))
+                (identifier)))))))))
+
+==================
+For Next empty body
+==================
+
+For i = 1 To 10
+Next
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (for_statement
+        (identifier)
+        (number_literal)
+        (number_literal)
+        (statement_line)))))
+
+==================
+For Each loop
+==================
+
+For Each item In collection
+  x = item
+Next
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (for_each_statement
+        (identifier)
+        (identifier)
+        (statement_line
+          (statement_group
+            (expression_statement
+              (binary_expression
+                (identifier)
+                (identifier)))))))))
+
+==================
+While Wend
+==================
+
+While x > 0
+  x = x - 1
+Wend
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (while_wend_statement
+        (binary_expression
+          (identifier)
+          (number_literal))
+        (statement_line
+          (statement_group
+            (expression_statement
+              (binary_expression
+                (binary_expression
+                  (identifier)
+                  (identifier))
+                (number_literal)))))))))
+
+==================
+Do While loop
+==================
+
+Do While x > 0
+  x = x - 1
+Loop
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (do_loop_statement
+        (binary_expression
+          (identifier)
+          (number_literal))
+        (statement_line
+          (statement_group
+            (expression_statement
+              (binary_expression
+                (binary_expression
+                  (identifier)
+                  (identifier))
+                (number_literal)))))))))
+
+==================
+Do Until loop
+==================
+
+Do Until done
+  x = x + 1
+Loop
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (do_loop_statement
+        (identifier)
+        (statement_line
+          (statement_group
+            (expression_statement
+              (binary_expression
+                (binary_expression
+                  (identifier)
+                  (identifier))
+                (number_literal)))))))))
+
+==================
+Do Loop While
+==================
+
+Do
+  x = x - 1
+Loop While x > 0
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (do_loop_statement
+        (statement_line
+          (statement_group
+            (expression_statement
+              (binary_expression
+                (binary_expression
+                  (identifier)
+                  (identifier))
+                (number_literal)))))
+        (binary_expression
+          (identifier)
+          (number_literal))))))
+
+==================
+Do Loop Until
+==================
+
+Do
+  x = x + 1
+Loop Until x > 100
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (do_loop_statement
+        (statement_line
+          (statement_group
+            (expression_statement
+              (binary_expression
+                (binary_expression
+                  (identifier)
+                  (identifier))
+                (number_literal)))))
+        (binary_expression
+          (identifier)
+          (number_literal))))))
+
+==================
+Do Loop bare
+==================
+
+Do
+  x = x + 1
+Loop
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (do_loop_statement
+        (statement_line
+          (statement_group
+            (expression_statement
+              (binary_expression
+                (binary_expression
+                  (identifier)
+                  (identifier))
+                (number_literal)))))))))

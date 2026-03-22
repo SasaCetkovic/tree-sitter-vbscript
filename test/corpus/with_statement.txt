@@ -1,0 +1,128 @@
+==================
+Simple With empty body
+==================
+
+With obj
+End With
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (with_statement
+        (identifier)
+        (statement_line)))))
+
+==================
+With property assignment
+==================
+
+With obj
+.Name = "test"
+End With
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (with_statement
+        (identifier)
+        (statement_line)
+        (statement_line
+          (statement_group
+            (expression_statement
+              (binary_expression
+                (unqualified_member_expression
+                  (identifier))
+                (string_literal)))))))))
+
+==================
+With method call implicit
+==================
+
+With obj
+.DoSomething
+End With
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (with_statement
+        (identifier)
+        (statement_line)
+        (statement_line
+          (statement_group
+            (expression_statement
+              (unqualified_member_expression
+                (identifier)))))))))
+
+==================
+Unqualified member expression read
+==================
+
+With conn
+result = .Execute(sql)
+End With
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (with_statement
+        (identifier)
+        (statement_line)
+        (statement_line
+          (statement_group
+            (expression_statement
+              (call_expression
+                (binary_expression
+                  (identifier)
+                  (unqualified_member_expression
+                    (identifier)))
+                (argument_list
+                  (identifier))))))))))
+
+==================
+Member expression outside With
+==================
+
+x = obj.Name
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (member_expression
+          (binary_expression
+            (identifier)
+            (identifier))
+          (identifier))))))
+
+==================
+Mixed case With
+==================
+
+wItH obj
+End With
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (with_statement
+        (identifier)
+        (statement_line)))))

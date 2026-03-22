@@ -1,0 +1,118 @@
+==================
+On Error Resume Next
+==================
+
+On Error Resume Next
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (on_error_statement))))
+
+==================
+On Error GoTo label
+==================
+
+On Error GoTo ErrHandler
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (on_error_statement
+        (identifier)))))
+
+==================
+On Error GoTo 0
+==================
+
+On Error GoTo 0
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (on_error_statement
+        (number_literal)))))
+
+==================
+GoTo statement
+==================
+
+GoTo MyLabel
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (goto_statement
+        (identifier)))))
+
+==================
+GoTo numeric label
+==================
+
+GoTo 100
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (goto_statement
+        (number_literal)))))
+
+==================
+Erase single array
+==================
+
+Erase myArr
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (erase_statement
+        (identifier)))))
+
+==================
+Erase multiple arrays
+==================
+
+Erase arr1, arr2
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (erase_statement
+        (identifier)
+        (identifier)))))
+
+==================
+Mixed case On Error
+==================
+
+oN eRrOr rEsUmE nExT
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (on_error_statement))))

@@ -1,0 +1,259 @@
+==================
+Simple Dim declaration
+==================
+
+Dim x
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (declaration_statement
+        (variable_declaration
+          (declared_variable
+            (identifier)))))))
+
+==================
+Multiple Dim variables
+==================
+
+Dim x, y, z
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (declaration_statement
+        (variable_declaration
+          (declared_variable
+            (identifier))
+          (declared_variable
+            (identifier))
+          (declared_variable
+            (identifier)))))))
+
+==================
+Dim with array dimension
+==================
+
+Dim arr(10)
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (declaration_statement
+        (variable_declaration
+          (declared_variable
+            (identifier)
+            (argument_list
+              (number_literal))))))))
+
+==================
+Dim with two-dimensional array
+==================
+
+Dim matrix(3, 4)
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (declaration_statement
+        (variable_declaration
+          (declared_variable
+            (identifier)
+            (argument_list
+              (number_literal)
+              (number_literal))))))))
+
+==================
+Mixed case Dim
+==================
+
+dIm myVar
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (declaration_statement
+        (variable_declaration
+          (declared_variable
+            (identifier)))))))
+
+==================
+ReDim statement
+==================
+
+ReDim myArr(5)
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (declaration_statement
+        (variable_declaration
+          (declared_variable
+            (identifier)
+            (argument_list
+              (number_literal))))))))
+
+==================
+ReDim Preserve
+==================
+
+ReDim Preserve myArr(10)
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (declaration_statement
+        (variable_declaration
+          (declared_variable
+            (identifier)
+            (argument_list
+              (number_literal))))))))
+
+==================
+Public Dim
+==================
+
+Public Dim x
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (declaration_statement
+        (variable_declaration
+          (declared_variable
+            (identifier)))))))
+
+==================
+Private Dim
+==================
+
+Private Dim x
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (declaration_statement
+        (variable_declaration
+          (declared_variable
+            (identifier)))))))
+
+==================
+Const declaration
+==================
+
+Const PI = 3.14
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (declaration_statement
+        (constant_declaration
+          (constant_definition
+            (identifier)
+            (number_literal)))))))
+
+==================
+Multiple Const definitions
+==================
+
+Const MAX = 100, MIN = 0
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (declaration_statement
+        (constant_declaration
+          (constant_definition
+            (identifier)
+            (number_literal))
+          (constant_definition
+            (identifier)
+            (number_literal)))))))
+
+==================
+Public Const
+==================
+
+Public Const MAX = 100
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (declaration_statement
+        (constant_declaration
+          (constant_definition
+            (identifier)
+            (number_literal)))))))
+
+==================
+Const with string value
+==================
+
+Const APP_NAME = "MyApp"
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (declaration_statement
+        (constant_declaration
+          (constant_definition
+            (identifier)
+            (string_literal)))))))
+
+==================
+Set statement
+==================
+
+Set obj = CreateObject("Scripting.FileSystemObject")
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (set_statement
+        (identifier)
+        (call_expression
+          (identifier)
+          (argument_list
+            (string_literal)))))))

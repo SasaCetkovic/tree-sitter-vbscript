@@ -1,0 +1,189 @@
+==================
+String literal
+==================
+
+x = "hello world"
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (binary_expression
+          (identifier)
+          (string_literal))))))
+
+==================
+Empty string
+==================
+
+x = ""
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (binary_expression
+          (identifier)
+          (string_literal))))))
+
+==================
+Escaped quotes in string
+==================
+
+x = "He said ""hi"""
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (binary_expression
+          (identifier)
+          (string_literal))))))
+
+==================
+Number integer
+==================
+
+x = 42
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (binary_expression
+          (identifier)
+          (number_literal))))))
+
+==================
+Number float
+==================
+
+x = 3.14
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (binary_expression
+          (identifier)
+          (number_literal))))))
+
+==================
+Inline comment
+==================
+
+x = 1 ' this is a comment
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (binary_expression
+          (identifier)
+          (number_literal)))
+      )
+    (comment)))
+
+==================
+REM comment
+==================
+
+REM this is a rem comment
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (rem_comment))))
+
+==================
+Line continuation
+==================
+
+x = 1 + _
+    2
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (binary_expression
+          (binary_expression
+            (identifier)
+            (number_literal))
+          (line_continuation)
+          (number_literal))))))
+
+==================
+Simple identifier
+==================
+
+myVariable = 1
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (binary_expression
+          (identifier)
+          (number_literal))))))
+
+==================
+Underscore identifier
+==================
+
+_myVar = 1
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (binary_expression
+          (identifier)
+          (number_literal))))))
+
+==================
+Mixed alphanumeric identifier
+==================
+
+myVar123 = 1
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (binary_expression
+          (identifier)
+          (number_literal))))))

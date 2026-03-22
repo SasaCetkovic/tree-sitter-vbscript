@@ -1,0 +1,408 @@
+==================
+Assignment with Let keyword
+==================
+
+Let x = 5
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (assignment_expression
+          (identifier)
+          (number_literal))))))
+
+==================
+Parenthesized expression
+==================
+
+x = (1 + 2)
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (binary_expression
+          (identifier)
+          (parenthesized_expression
+            (binary_expression
+              (number_literal)
+              (number_literal))))))))
+
+==================
+Unary minus
+==================
+
+x = -1
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (binary_expression
+          (identifier)
+          (unary_expression
+            (number_literal)))))))
+
+==================
+Unary Not
+==================
+
+x = Not x
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (binary_expression
+          (identifier)
+          (unary_expression
+            (identifier)))))))
+
+==================
+Nested function calls
+==================
+
+x = f(g(h(1)))
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (call_expression
+          (binary_expression
+            (identifier)
+            (identifier))
+          (argument_list
+            (call_expression
+              (identifier)
+              (argument_list
+                (call_expression
+                  (identifier)
+                  (argument_list
+                    (number_literal)))))))))))
+
+==================
+Member chain
+==================
+
+x = a.b.c
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (member_expression
+          (member_expression
+            (binary_expression
+              (identifier)
+              (identifier))
+            (identifier))
+          (identifier))))))
+
+==================
+And operator
+==================
+
+x = a And b
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (binary_expression
+          (binary_expression
+            (identifier)
+            (identifier))
+          (identifier))))))
+
+==================
+Or operator
+==================
+
+x = a Or b
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (binary_expression
+          (binary_expression
+            (identifier)
+            (identifier))
+          (identifier))))))
+
+==================
+Mixed case And operator
+==================
+
+x = a aNd b
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (binary_expression
+          (binary_expression
+            (identifier)
+            (identifier))
+          (identifier))))))
+
+==================
+Concatenation operator
+==================
+
+x = a & b
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (binary_expression
+          (binary_expression
+            (identifier)
+            (identifier))
+          (identifier))))))
+
+==================
+Arithmetic operators
+==================
+
+x = a + b
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (binary_expression
+          (binary_expression
+            (identifier)
+            (identifier))
+          (identifier))))))
+
+==================
+Member expression as argument
+==================
+
+MySub obj.Name
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (implicit_call_statement
+        (identifier)
+        (argument_list
+          (member_expression
+            (identifier)
+            (identifier)))))))
+
+==================
+Call expression as argument
+==================
+
+MySub f(1, 2)
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (implicit_call_statement
+        (identifier)
+        (argument_list
+          (call_expression
+            (identifier)
+            (argument_list
+              (number_literal)
+              (number_literal))))))))
+
+==================
+Multiplication precedence in argument
+==================
+
+MySub a + b * c
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (implicit_call_statement
+        (identifier)
+        (argument_list
+          (binary_expression
+            (binary_expression
+              (identifier)
+              (identifier))
+            (identifier)))))))
+
+==================
+Comparison operators
+==================
+
+x = a <> b
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (binary_expression
+          (binary_expression
+            (identifier)
+            (identifier))
+          (identifier))))))
+
+==================
+Imp operator
+==================
+
+x = a Imp b
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (binary_expression
+          (binary_expression
+            (identifier)
+            (identifier))
+          (identifier))))))
+
+==================
+Eqv operator
+==================
+
+x = a Eqv b
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (binary_expression
+          (binary_expression
+            (identifier)
+            (identifier))
+          (identifier))))))
+
+==================
+Xor operator
+==================
+
+x = a Xor b
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (binary_expression
+          (binary_expression
+            (identifier)
+            (identifier))
+          (identifier))))))
+
+==================
+Mod operator
+==================
+
+x = a Mod b
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (binary_expression
+          (binary_expression
+            (identifier)
+            (identifier))
+          (identifier))))))
+
+==================
+Integer division operator
+==================
+
+x = a \ b
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (binary_expression
+          (binary_expression
+            (identifier)
+            (identifier))
+          (identifier))))))
+
+==================
+Exponent operator
+==================
+
+x = a ^ b
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (binary_expression
+          (binary_expression
+            (identifier)
+            (identifier))
+          (identifier))))))

@@ -1,0 +1,183 @@
+==================
+Conflict 1a: call_expression wins over implicit_call
+==================
+
+x = foo(bar)
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (call_expression
+          (binary_expression
+            (identifier)
+            (identifier))
+          (argument_list
+            (identifier)))))))
+
+==================
+Conflict 1b: implicit_call_statement with multiple arguments
+==================
+
+foo bar, baz
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (implicit_call_statement
+        (identifier)
+        (argument_list
+          (identifier)
+          (identifier))))))
+
+==================
+Conflict 1c: standalone call with no arguments is call_expression
+==================
+
+Call foo()
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (call_statement
+        (call_expression
+          (identifier))))))
+
+==================
+Conflict 2: expression vs lvalue - Let forces assignment_expression
+==================
+
+Let x = 5
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (assignment_expression
+          (identifier)
+          (number_literal))))))
+
+==================
+Conflict 2b: identifier as expression context
+==================
+
+foo
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (identifier)))))
+
+==================
+Conflict 3: parenthesized expression vs argument list - single item
+==================
+
+x = (a)
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (binary_expression
+          (identifier)
+          (parenthesized_expression
+            (identifier)))))))
+
+==================
+Conflict 3b: call with single parenthesized argument
+==================
+
+foo((a))
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (call_expression
+          (identifier)
+          (argument_list
+            (parenthesized_expression
+              (identifier))))))))
+
+==================
+Conflict 4: unqualified member expression inside With
+==================
+
+With obj
+.Name = "test"
+End With
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (with_statement
+        (identifier)
+        (statement_line)
+        (statement_line
+          (statement_group
+            (expression_statement
+              (binary_expression
+                (unqualified_member_expression
+                  (identifier))
+                (string_literal)))))))))
+
+==================
+Conflict 4b: member expression outside With block
+==================
+
+x = obj.Name
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (member_expression
+          (binary_expression
+            (identifier)
+            (identifier))
+          (identifier))))))
+
+==================
+Conflict 5: implicit call with one argument no parens
+==================
+
+MySub x
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (implicit_call_statement
+        (identifier)
+        (argument_list
+          (identifier))))))
