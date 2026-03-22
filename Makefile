@@ -4,7 +4,7 @@ endif
 
 LANGUAGE_NAME := tree-sitter-vbscript
 HOMEPAGE_URL := https://github.com/SasaCetkovic/tree-sitter-vbscript
-VERSION := 0.1.0
+VERSION := 0.2.0
 
 # repository
 SRC_DIR := src

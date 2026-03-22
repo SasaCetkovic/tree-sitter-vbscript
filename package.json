@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-vbscript",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "VBScript grammar for the tree-sitter parsing library",
   "repository": "https://github.com/SasaCetkovic/tree-sitter-vbscript",
   "license": "MIT",
@@ -32,8 +32,8 @@
   },
   "devDependencies": {
     "prebuildify": "^6.0.1",
-    "tree-sitter-cli": "^0.25.7",
-    "tree-sitter": "^0.22.4"
+    "tree-sitter": "^0.22.4",
+    "tree-sitter-cli": "^0.25.7"
   },
   "peerDependencies": {
     "tree-sitter": "^0.22.4"
