@@ -10,8 +10,4 @@ authors = ["Sasa Cetkovic <sasa.cetkovic@outlook.cz>"]
 repository = "https://github.com/SasaCetkovic/tree-sitter-vbscript"
 commit = "56f607a5ea85d3a8641c699ad8e1d76045934a28"
 
-[[languages]]
-name = "VBScript"
-grammar = "vbscript"
-path_suffixes = ["vbs", "asp"]
-line_comment = "' "
+languages = ["languages/vbscript"]
