@@ -1,0 +1,17 @@
+id = "vbscript"
+name = "VBScript"
+version = "0.3.0"
+schema_version = 1
+description = "VBScript language support for Zed"
+repository = "https://github.com/SasaCetkovic/tree-sitter-vbscript"
+authors = ["Sasa Cetkovic <sasa.cetkovic@outlook.cz>"]
+
+[grammars.vbscript]
+repository = "https://github.com/SasaCetkovic/tree-sitter-vbscript"
+commit = "56f607a5ea85d3a8641c699ad8e1d76045934a28"
+
+[languages.vbscript]
+name = "VBScript"
+grammar = "vbscript"
+path_suffixes = ["vbs", "asp"]
+line_comment = "' "
