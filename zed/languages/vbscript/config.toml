@@ -4,4 +4,6 @@ path_suffixes = ["vbs", "asp"]
 line_comments = ["' "]
 tab_size = 4
 hard_tabs = false
-brackets = [["(", ")"]]
+[[brackets]]
+start = "("
+end = ")"
