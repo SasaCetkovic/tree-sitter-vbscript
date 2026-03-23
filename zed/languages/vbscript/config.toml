@@ -6,4 +6,4 @@ tab_size = 4
 hard_tabs = false
 [[brackets]]
 start = "("
-end = ")"
+close = ")"
