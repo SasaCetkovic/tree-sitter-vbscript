@@ -1,0 +1,16 @@
+id = "vbscript"
+name = "VBScript"
+version = "0.3.0"
+schema_version = 1
+description = "VBScript language support for Zed"
+repository = "https://github.com/SasaCetkovic/tree-sitter-vbscript"
+authors = ["Sasa Cetkovic <sasa.cetkovic@outlook.cz>"]
+
+# Dev extension: grammar compiled from local source tree.
+# For publishing, change repository to the GitHub https:// URL and set rev to
+# the merged commit SHA on main.
+[grammars.vbscript]
+repository = "file:///Users/sasa/Projects/GitHub/tree-sitter-vbscript"
+rev = "624f6372e02935d3703f9926e71a311ae4f20f93"
+
+languages = ["languages/vbscript"]
