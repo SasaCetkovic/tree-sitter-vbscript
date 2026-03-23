@@ -39,6 +39,9 @@ zig-out/
 # Example dirs
 /examples/*/
 
+# Zed grammar cache (populated at dev extension install time)
+zed/grammars/
+
 # Grammar volatiles
 *.wasm
 *.obj
