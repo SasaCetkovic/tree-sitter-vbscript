@@ -11,6 +11,6 @@ authors = ["Sasa Cetkovic <sasa.cetkovic@outlook.cz>"]
 # the merged commit SHA on main.
 [grammars.vbscript]
 repository = "file:///Users/sasa/Projects/GitHub/tree-sitter-vbscript"
-rev = "50109490e646fc944e720493b279574889013212"
+rev = "0ef02b2ebad333d434b9a5482aac3e60775f861d"
 
 languages = ["languages/vbscript"]
