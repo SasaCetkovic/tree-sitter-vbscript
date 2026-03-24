@@ -9,6 +9,8 @@
    keyword.split('').map(c => `[${c.toLowerCase()}${c.toUpperCase()}]`).join('')
  );
 
+const kw = keyword => alias(ci(keyword), keyword);
+
 
 /// <reference types="tree-sitter-cli/dsl" />
 // @ts-check
@@ -69,8 +71,8 @@ module.exports = grammar({
         ),
 
         option_explicit_statement: $ => seq(
-            ci('option'),
-            ci('explicit'),
+            kw('option'),
+            kw('explicit'),
             $._terminator
         ),
 
@@ -116,36 +118,36 @@ module.exports = grammar({
 
         // Statements
         with_statement: $ => seq(
-            ci('with'),
+            kw('with'),
             field('object', $._expression),
             $._terminator,
             repeat($.statement_line),
-            ci('end'),
-            ci('with')
+            kw('end'),
+            kw('with')
         ),
 
         on_error_statement: $ => seq(
-            ci('on'),
-            ci('error'),
+            kw('on'),
+            kw('error'),
             choice(
-                seq(ci('resume'), ci('next')),
-                seq(ci('goto'), field('label', choice($.identifier, $.number_literal)))
+                seq(kw('resume'), kw('next')),
+                seq(kw('goto'), field('label', choice($.identifier, $.number_literal)))
             )
         ),
 
         goto_statement: $ => seq(
-            ci('goto'),
+            kw('goto'),
             field('label', choice($.identifier, $.number_literal))
         ),
 
         erase_statement: $ => seq(
-            ci('erase'),
+            kw('erase'),
             $._lvalue,
             repeat(seq(',', $._lvalue))
         ),
 
         call_statement: $ => seq(
-            ci('call'),
+            kw('call'),
             choice(
                 $.call_expression,
                 $.member_expression,
@@ -155,34 +157,34 @@ module.exports = grammar({
 
         function_declaration: $ => seq(
             optional(field('access_modifier', choice(
-                ci('public'),
-                ci('private')
+                kw('public'),
+                kw('private')
             ))),
-            ci('function'),
+            kw('function'),
             field('name', $.identifier),
             '(',
             field('parameters', optional($.parameter_list)),
             ')',
             $._terminator,
             repeat($.statement_line),
-            ci('end'),
-            ci('function')
+            kw('end'),
+            kw('function')
         ),
 
         sub_declaration: $ => seq(
             optional(field('access_modifier', choice(
-                ci('public'),
-                ci('private')
+                kw('public'),
+                kw('private')
             ))),
-            ci('sub'),
+            kw('sub'),
             field('name', $.identifier),
             '(',
             field('parameters', optional($.parameter_list)),
             ')',
             $._terminator,
             repeat($.statement_line),
-            ci('end'),
-            ci('sub')
+            kw('end'),
+            kw('sub')
         ),
 
         parameter_list: $ => seq(
@@ -191,132 +193,132 @@ module.exports = grammar({
         ),
 
         parameter: $ => seq(
-            optional(field('optional', ci('optional'))),
+            optional(field('optional', kw('optional'))),
             optional(field('mechanism', choice(
-                ci('byval'),
-                ci('byref')
+                kw('byval'),
+                kw('byref')
             ))),
             field('name', $.identifier),
             optional(field('is_array', '()'))
         ),
 
         block_if_statement: $ => seq(
-            ci('if'),
+            kw('if'),
             field('condition', $._expression),
-            ci('then'),
+            kw('then'),
             $._terminator,
             repeat($.statement_line),
             repeat($.elseif_clause),
             optional($.else_clause),
-            ci('end'),
-            ci('if')
+            kw('end'),
+            kw('if')
         ),
 
         single_line_if_statement: $ => prec.right(1, seq(
-            ci('if'),
+            kw('if'),
             field('condition', $._expression),
-            ci('then'),
+            kw('then'),
             field('consequence', $.statement_group),
             optional(seq(
-                ci('else'),
+                kw('else'),
                 field('alternative', $.statement_group)
             ))
         )),
 
         elseif_clause: $ => seq(
-            ci('elseif'),
+            kw('elseif'),
             field('condition', $._expression),
-            ci('then'),
+            kw('then'),
             $._terminator,
             repeat($.statement_line)
         ),
 
         else_clause: $ => seq(
-            ci('else'),
+            kw('else'),
             $._terminator,
             repeat($.statement_line)
         ),
 
         for_statement: $ => seq(
-            ci('for'),
+            kw('for'),
             field('counter', $._lvalue),
             '=',
             field('start', $._expression),
-            ci('to'),
+            kw('to'),
             field('end', $._expression),
             optional(seq(
-                ci('step'),
+                kw('step'),
                 field('step', $._expression)
             )),
             $._terminator,
             repeat($.statement_line),
-            ci('next')
+            kw('next')
         ),
 
         for_each_statement: $ => seq(
-            ci('for'),
-            ci('each'),
+            kw('for'),
+            kw('each'),
             field('element', $._lvalue),
-            ci('in'),
+            kw('in'),
             field('group', $._expression),
             $._terminator,
             repeat($.statement_line),
-            ci('next')
+            kw('next')
         ),
 
         do_loop_statement: $ => choice(
             // `Do ... Loop While/Until condition` has precedence to resolve ambiguity
             prec(1, seq(
-                ci('do'),
+                kw('do'),
                 $._terminator,
                 repeat($.statement_line),
-                ci('loop'),
-                field('loop_type', choice(ci('while'), ci('until'))),
+                kw('loop'),
+                field('loop_type', choice(kw('while'), kw('until'))),
                 field('condition', $._expression)
             )),
             // `Do [While/Until condition] ... Loop`
             seq(
-                ci('do'),
+                kw('do'),
                 optional(seq(
-                    field('loop_type', choice(ci('while'), ci('until'))),
+                    field('loop_type', choice(kw('while'), kw('until'))),
                     field('condition', $._expression)
                 )),
                 $._terminator,
                 repeat($.statement_line),
-                ci('loop')
+                kw('loop')
             )
         ),
 
         while_wend_statement: $ => seq(
-            ci('while'),
+            kw('while'),
             field('condition', $._expression),
             $._terminator,
             repeat($.statement_line),
-            ci('wend')
+            kw('wend')
         ),
 
         exit_statement: $ => seq(
-            ci('exit'),
+            kw('exit'),
             choice(
-                ci('do'),
-                ci('for'),
-                ci('function'),
-                ci('sub'),
-                ci('property')
+                kw('do'),
+                kw('for'),
+                kw('function'),
+                kw('sub'),
+                kw('property')
             )
         ),
 
         class_statement: $ => seq(
             optional(field('access_modifier', choice(
-                ci('public'),
-                ci('private')
+                kw('public'),
+                kw('private')
             ))),
-            ci('class'),
+            kw('class'),
             field('name', $.identifier),
             $._terminator,
             repeat(seq($.class_statement_group, $._terminator)),
-            ci('end'),
-            ci('class')
+            kw('end'),
+            kw('class')
         ),
 
         class_statement_group: $ => seq(
@@ -336,74 +338,74 @@ module.exports = grammar({
 
         property_get_statement: $ => seq(
             optional(field('access_modifier', choice(
-                ci('public'),
-                ci('private')
+                kw('public'),
+                kw('private')
             ))),
-            optional(field('default', ci('default'))),
-            ci('property'),
-            ci('get'),
+            optional(field('default', kw('default'))),
+            kw('property'),
+            kw('get'),
             field('name', $.identifier),
             '(',
             field('parameters', optional($.parameter_list)),
             ')',
             $._terminator,
             repeat($.statement_line),
-            ci('end'),
-            ci('property')
+            kw('end'),
+            kw('property')
         ),
 
         property_let_statement: $ => seq(
             optional(field('access_modifier', choice(
-                ci('public'),
-                ci('private')
+                kw('public'),
+                kw('private')
             ))),
-            ci('property'),
-            ci('let'),
+            kw('property'),
+            kw('let'),
             field('name', $.identifier),
             '(',
             field('parameters', $.parameter_list),
             ')',
             $._terminator,
             repeat($.statement_line),
-            ci('end'),
-            ci('property')
+            kw('end'),
+            kw('property')
         ),
 
         property_set_statement: $ => seq(
             optional(field('access_modifier', choice(
-                ci('public'),
-                ci('private')
+                kw('public'),
+                kw('private')
             ))),
-            ci('property'),
-            ci('set'),
+            kw('property'),
+            kw('set'),
             field('name', $.identifier),
             '(',
             field('parameters', $.parameter_list),
             ')',
             $._terminator,
             repeat($.statement_line),
-            ci('end'),
-            ci('property')
+            kw('end'),
+            kw('property')
         ),
 
         select_case_statement: $ => seq(
-            ci('select'), ci('case'),
+            kw('select'), kw('case'),
             field('value', $._expression),
             $._terminator,
             repeat($.case_clause),
             optional($.case_else_clause),
-            ci('end'), ci('select')
+            kw('end'), kw('select')
         ),
 
         case_clause: $ => seq(
-            ci('case'),
+            kw('case'),
             $.case_expression_list,
             $._terminator,
             repeat($.statement_line)
         ),
 
         case_else_clause: $ => seq(
-            ci('case'), ci('else'),
+            kw('case'), kw('else'),
             $._terminator,
             repeat($.statement_line)
         ),
@@ -415,8 +417,8 @@ module.exports = grammar({
 
         _case_expression: $ => choice(
             $._expression,
-            alias(seq($._expression, ci('to'), $._expression), $.range_expression),
-            alias(seq(ci('is'), field('operator', choice('=', '<>', '<', '<=', '>', '>=')), $._expression), $.is_expression)
+            alias(seq($._expression, kw('to'), $._expression), $.range_expression),
+            alias(seq(kw('is'), field('operator', choice('=', '<>', '<', '<=', '>', '>=')), $._expression), $.is_expression)
         ),
 
         declaration_statement: $ => choice(
@@ -426,12 +428,12 @@ module.exports = grammar({
 
         variable_declaration: $ => seq(
             optional(field('access_modifier', choice(
-                ci('public'),
-                ci('private')
+                kw('public'),
+                kw('private')
             ))),
             field('keyword', choice(
-                ci('dim'),
-                seq(ci('redim'), optional(ci('preserve')))
+                kw('dim'),
+                seq(kw('redim'), optional(kw('preserve')))
             )),
             seq(
                 $.declared_variable,
@@ -450,10 +452,10 @@ module.exports = grammar({
 
         constant_declaration: $ => seq(
             optional(field('access_modifier', choice(
-                ci('public'),
-                ci('private')
+                kw('public'),
+                kw('private')
             ))),
-            ci('const'),
+            kw('const'),
             seq(
                 $.constant_definition,
                 repeat(seq(',', $.constant_definition))
@@ -467,7 +469,7 @@ module.exports = grammar({
         ),
 
         set_statement: $ => seq(
-            ci('set'),
+            kw('set'),
             field('left', $._lvalue),
             '=',
             field('right', $._expression)
@@ -501,7 +503,7 @@ module.exports = grammar({
         ),
 
         assignment_expression: $ => prec.right('assignment', seq(
-            optional(ci('let')),
+            optional(kw('let')),
             field('left', $._lvalue),
             '=',
             field('right', $._expression)
@@ -553,18 +555,18 @@ module.exports = grammar({
 
         binary_expression: $ => choice(
             ...[
-                [ci('or'), 'or'],
-                [ci('xor'), 'xor'],
-                [ci('and'), 'and'],
-                [ci('imp'), 'imp'],
-                [ci('eqv'), 'eqv'],
+                [kw('or'), 'or'],
+                [kw('xor'), 'xor'],
+                [kw('and'), 'and'],
+                [kw('imp'), 'imp'],
+                [kw('eqv'), 'eqv'],
                 ['&', 'concatenation'],
                 ['+', 'addition'],
                 ['-', 'addition'],
                 ['*', 'multiplication'],
                 ['/', 'multiplication'],
                 ['\\', 'integer_division'],
-                [ci('mod'), 'modulo'],
+                [kw('mod'), 'modulo'],
                 ['^', 'exponent'],
                 ['=', 'comparison'],
                 ['<>', 'comparison'],
@@ -572,7 +574,7 @@ module.exports = grammar({
                 ['<=', 'comparison'],
                 ['>', 'comparison'],
                 ['>=', 'comparison'],
-                [ci('is'), 'is'],
+                [kw('is'), 'is'],
             ].map(([operator, precedence_name]) =>
                 prec.left(precedence_name, seq(
                     field('left', $._expression),
@@ -588,7 +590,7 @@ module.exports = grammar({
             field('operand', $._expression)
           )),
           prec.right('not', seq(
-            field('operator', ci('not')),
+            field('operator', kw('not')),
             field('operand', $._expression)
           ))
         ),

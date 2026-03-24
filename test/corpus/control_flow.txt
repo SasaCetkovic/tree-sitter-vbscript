@@ -192,7 +192,6 @@ End Select
           (case_expression_list
             (range_expression
               (number_literal))
-            (range_expression)
             (range_expression
               (number_literal)))
           (statement_line
@@ -221,7 +220,6 @@ End Select
         (identifier)
         (case_clause
           (case_expression_list
-            (is_expression)
             (is_expression)
             (is_expression
               (number_literal)))

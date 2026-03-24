@@ -315,6 +315,34 @@
           {
             "type": "^",
             "named": false
+          },
+          {
+            "type": "and",
+            "named": false
+          },
+          {
+            "type": "eqv",
+            "named": false
+          },
+          {
+            "type": "imp",
+            "named": false
+          },
+          {
+            "type": "is",
+            "named": false
+          },
+          {
+            "type": "mod",
+            "named": false
+          },
+          {
+            "type": "or",
+            "named": false
+          },
+          {
+            "type": "xor",
+            "named": false
           }
         ]
       },
@@ -490,6 +518,20 @@
     "type": "class_statement",
     "named": true,
     "fields": {
+      "access_modifier": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "private",
+            "named": false
+          },
+          {
+            "type": "public",
+            "named": false
+          }
+        ]
+      },
       "name": {
         "multiple": false,
         "required": true,
@@ -530,7 +572,22 @@
   {
     "type": "constant_declaration",
     "named": true,
-    "fields": {},
+    "fields": {
+      "access_modifier": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "private",
+            "named": false
+          },
+          {
+            "type": "public",
+            "named": false
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -632,6 +689,20 @@
           {
             "type": "_expression",
             "named": true
+          }
+        ]
+      },
+      "loop_type": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "until",
+            "named": false
+          },
+          {
+            "type": "while",
+            "named": false
           }
         ]
       }
@@ -859,6 +930,20 @@
     "type": "function_declaration",
     "named": true,
     "fields": {
+      "access_modifier": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "private",
+            "named": false
+          },
+          {
+            "type": "public",
+            "named": false
+          }
+        ]
+      },
       "name": {
         "multiple": false,
         "required": true,
@@ -1030,6 +1115,20 @@
           }
         ]
       },
+      "mechanism": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "byref",
+            "named": false
+          },
+          {
+            "type": "byval",
+            "named": false
+          }
+        ]
+      },
       "name": {
         "multiple": false,
         "required": true,
@@ -1037,6 +1136,16 @@
           {
             "type": "identifier",
             "named": true
+          }
+        ]
+      },
+      "optional": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "optional",
+            "named": false
           }
         ]
       }
@@ -1076,6 +1185,30 @@
     "type": "property_get_statement",
     "named": true,
     "fields": {
+      "access_modifier": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "private",
+            "named": false
+          },
+          {
+            "type": "public",
+            "named": false
+          }
+        ]
+      },
+      "default": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "default",
+            "named": false
+          }
+        ]
+      },
       "name": {
         "multiple": false,
         "required": true,
@@ -1112,6 +1245,20 @@
     "type": "property_let_statement",
     "named": true,
     "fields": {
+      "access_modifier": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "private",
+            "named": false
+          },
+          {
+            "type": "public",
+            "named": false
+          }
+        ]
+      },
       "name": {
         "multiple": false,
         "required": true,
@@ -1148,6 +1295,20 @@
     "type": "property_set_statement",
     "named": true,
     "fields": {
+      "access_modifier": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "private",
+            "named": false
+          },
+          {
+            "type": "public",
+            "named": false
+          }
+        ]
+      },
       "name": {
         "multiple": false,
         "required": true,
@@ -1347,6 +1508,20 @@
     "type": "sub_declaration",
     "named": true,
     "fields": {
+      "access_modifier": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "private",
+            "named": false
+          },
+          {
+            "type": "public",
+            "named": false
+          }
+        ]
+      },
       "name": {
         "multiple": false,
         "required": true,
@@ -1404,6 +1579,10 @@
           {
             "type": "-",
             "named": false
+          },
+          {
+            "type": "not",
+            "named": false
           }
         ]
       }
@@ -1428,7 +1607,40 @@
   {
     "type": "variable_declaration",
     "named": true,
-    "fields": {},
+    "fields": {
+      "access_modifier": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "private",
+            "named": false
+          },
+          {
+            "type": "public",
+            "named": false
+          }
+        ]
+      },
+      "keyword": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "dim",
+            "named": false
+          },
+          {
+            "type": "preserve",
+            "named": false
+          },
+          {
+            "type": "redim",
+            "named": false
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -1589,17 +1801,109 @@
     "named": false
   },
   {
+    "type": "and",
+    "named": false
+  },
+  {
+    "type": "byref",
+    "named": false
+  },
+  {
+    "type": "byval",
+    "named": false
+  },
+  {
+    "type": "call",
+    "named": false
+  },
+  {
+    "type": "case",
+    "named": false
+  },
+  {
+    "type": "class",
+    "named": false
+  },
+  {
     "type": "comment",
     "named": true,
     "extra": true
+  },
+  {
+    "type": "const",
+    "named": false
   },
   {
     "type": "date_literal",
     "named": true
   },
   {
+    "type": "default",
+    "named": false
+  },
+  {
+    "type": "dim",
+    "named": false
+  },
+  {
+    "type": "do",
+    "named": false
+  },
+  {
+    "type": "each",
+    "named": false
+  },
+  {
+    "type": "else",
+    "named": false
+  },
+  {
+    "type": "elseif",
+    "named": false
+  },
+  {
     "type": "empty",
     "named": true
+  },
+  {
+    "type": "end",
+    "named": false
+  },
+  {
+    "type": "eqv",
+    "named": false
+  },
+  {
+    "type": "erase",
+    "named": false
+  },
+  {
+    "type": "error",
+    "named": false
+  },
+  {
+    "type": "exit",
+    "named": false
+  },
+  {
+    "type": "explicit",
+    "named": false
+  },
+  {
+    "type": "for",
+    "named": false
+  },
+  {
+    "type": "function",
+    "named": false
+  },
+  {
+    "type": "get",
+    "named": false
+  },
+  {
+    "type": "goto",
+    "named": false
   },
   {
     "type": "hex_literal",
@@ -1610,13 +1914,49 @@
     "named": true
   },
   {
+    "type": "if",
+    "named": false
+  },
+  {
+    "type": "imp",
+    "named": false
+  },
+  {
+    "type": "in",
+    "named": false
+  },
+  {
+    "type": "is",
+    "named": false
+  },
+  {
     "type": "is_expression",
     "named": true
+  },
+  {
+    "type": "let",
+    "named": false
   },
   {
     "type": "line_continuation",
     "named": true,
     "extra": true
+  },
+  {
+    "type": "loop",
+    "named": false
+  },
+  {
+    "type": "mod",
+    "named": false
+  },
+  {
+    "type": "next",
+    "named": false
+  },
+  {
+    "type": "not",
+    "named": false
   },
   {
     "type": "nothing",
@@ -1635,11 +1975,91 @@
     "named": true
   },
   {
-    "type": "range_expression",
-    "named": true
+    "type": "on",
+    "named": false
+  },
+  {
+    "type": "option",
+    "named": false
+  },
+  {
+    "type": "optional",
+    "named": false
+  },
+  {
+    "type": "or",
+    "named": false
+  },
+  {
+    "type": "preserve",
+    "named": false
+  },
+  {
+    "type": "private",
+    "named": false
+  },
+  {
+    "type": "property",
+    "named": false
+  },
+  {
+    "type": "public",
+    "named": false
+  },
+  {
+    "type": "redim",
+    "named": false
   },
   {
     "type": "rem_comment",
     "named": true
+  },
+  {
+    "type": "resume",
+    "named": false
+  },
+  {
+    "type": "select",
+    "named": false
+  },
+  {
+    "type": "set",
+    "named": false
+  },
+  {
+    "type": "step",
+    "named": false
+  },
+  {
+    "type": "sub",
+    "named": false
+  },
+  {
+    "type": "then",
+    "named": false
+  },
+  {
+    "type": "to",
+    "named": false
+  },
+  {
+    "type": "until",
+    "named": false
+  },
+  {
+    "type": "wend",
+    "named": false
+  },
+  {
+    "type": "while",
+    "named": false
+  },
+  {
+    "type": "with",
+    "named": false
+  },
+  {
+    "type": "xor",
+    "named": false
   }
 ]

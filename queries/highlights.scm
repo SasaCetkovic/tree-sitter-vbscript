@@ -28,5 +28,54 @@
 ")" @punctuation.bracket
 "," @punctuation.delimiter
 ":" @punctuation.delimiter
+; Control flow
+"if" @keyword
+"then" @keyword
+"else" @keyword
+"elseif" @keyword
+"end" @keyword
+"for" @keyword
+"to" @keyword
+"step" @keyword
+"next" @keyword
+"each" @keyword
+"in" @keyword
+"do" @keyword
+"while" @keyword
+"until" @keyword
+"loop" @keyword
+"wend" @keyword
+"exit" @keyword
+"select" @keyword
+"case" @keyword
+"with" @keyword
+; Declaration / definition
+"sub" @keyword
+"function" @keyword
+"class" @keyword
+"property" @keyword
+"get" @keyword
+"set" @keyword
+"let" @keyword
+"dim" @keyword
+"redim" @keyword
+"preserve" @keyword
+"const" @keyword
+; Access modifiers and parameter qualifiers
+"public" @keyword
+"private" @keyword
+"default" @keyword
+"byval" @keyword
+"byref" @keyword
+"optional" @keyword
+; Statement keywords
+"call" @keyword
+"erase" @keyword
+"goto" @keyword
+"on" @keyword
+"error" @keyword
+"resume" @keyword
+"option" @keyword
+"explicit" @keyword
 ; Fallback — must be last
 (identifier) @variable
