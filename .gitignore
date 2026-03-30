@@ -52,3 +52,6 @@ zed/grammars/
 *.tgz
 *.zip
 .env
+
+# macOS metadata
+.DS_Store
