@@ -19,6 +19,10 @@
 (constant_definition name: (identifier) @variable)
 (parameter name: (identifier) @variable.parameter)
 (member_expression property: (identifier) @property)
+(unqualified_member_expression property: (identifier) @property)
+(call_expression function: (identifier) @function.call)
+(call_expression function: (member_expression property: (identifier) @function.call))
+"." @punctuation.delimiter
 (binary_expression operator: _ @operator)
 (unary_expression operator: _ @operator)
 (line_label label: _ @label)
@@ -70,6 +74,7 @@
 "optional" @keyword
 ; Statement keywords
 "call" @keyword
+"new" @keyword
 "erase" @keyword
 "goto" @keyword
 "on" @keyword

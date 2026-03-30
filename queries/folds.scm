@@ -1,0 +1,13 @@
+(function_declaration) @fold
+(sub_declaration) @fold
+(class_statement) @fold
+(property_get_statement) @fold
+(property_let_statement) @fold
+(property_set_statement) @fold
+(block_if_statement) @fold
+(for_statement) @fold
+(for_each_statement) @fold
+(do_loop_statement) @fold
+(while_wend_statement) @fold
+(with_statement) @fold
+(select_case_statement) @fold
