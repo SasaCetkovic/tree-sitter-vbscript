@@ -274,3 +274,20 @@ Option Explicit
         (identifier)
         (argument_list
           (identifier))))))
+
+==================
+New expression basic
+==================
+
+Set obj = New MyClass
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (set_statement
+        (identifier)
+        (new_expression
+          (identifier))))))

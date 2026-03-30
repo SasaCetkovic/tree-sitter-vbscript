@@ -162,9 +162,11 @@ module.exports = grammar({
             ))),
             kw('function'),
             field('name', $.identifier),
-            '(',
-            field('parameters', optional($.parameter_list)),
-            ')',
+            optional(seq(
+                '(',
+                field('parameters', optional($.parameter_list)),
+                ')'
+            )),
             $._terminator,
             repeat($.statement_line),
             kw('end'),
@@ -178,9 +180,11 @@ module.exports = grammar({
             ))),
             kw('sub'),
             field('name', $.identifier),
-            '(',
-            field('parameters', optional($.parameter_list)),
-            ')',
+            optional(seq(
+                '(',
+                field('parameters', optional($.parameter_list)),
+                ')'
+            )),
             $._terminator,
             repeat($.statement_line),
             kw('end'),
@@ -345,9 +349,11 @@ module.exports = grammar({
             kw('property'),
             kw('get'),
             field('name', $.identifier),
-            '(',
-            field('parameters', optional($.parameter_list)),
-            ')',
+            optional(seq(
+                '(',
+                field('parameters', optional($.parameter_list)),
+                ')'
+            )),
             $._terminator,
             repeat($.statement_line),
             kw('end'),
@@ -516,6 +522,7 @@ module.exports = grammar({
 
         _primary_expression: $ => choice(
             $.unqualified_member_expression,
+            $.new_expression,
             $.identifier,
             $.string_literal,
             $.number_literal,
@@ -527,6 +534,8 @@ module.exports = grammar({
             $.null,
             $.boolean_literal
         ),
+
+        new_expression: $ => seq(kw('new'), field('class', $.identifier)),
 
         parenthesized_expression: $ => seq('(', $._expression, ')'),
 
@@ -600,7 +609,7 @@ module.exports = grammar({
 
         comment: $ => token(seq("'", /.*/)),
 
-        rem_comment: $ => token(seq(ci('rem'), /.*/)),
+        rem_comment: $ => token(seq(ci('rem'), /[ \t].*/)),
 
         line_continuation: $ => token(seq(' _', choice('\r\n', '\n', '\r'))),
 
@@ -608,7 +617,7 @@ module.exports = grammar({
 
         string_literal: $ => seq('"', repeat(choice(/[^"]+/, '""')), '"'),
 
-        number_literal: $ => /\d+(\.\d+)?/,
+        number_literal: $ => /(\d+\.?\d*|\.\d+)([eE][+-]?\d+)?/,
 
         hex_literal: $ => /&[hH][0-9a-fA-F]+/,
 

@@ -70,6 +70,10 @@
         "named": true
       },
       {
+        "type": "new_expression",
+        "named": true
+      },
+      {
         "type": "nothing",
         "named": true
       },
@@ -1077,6 +1081,22 @@
     }
   },
   {
+    "type": "new_expression",
+    "named": true,
+    "fields": {
+      "class": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "on_error_statement",
     "named": true,
     "fields": {
@@ -1948,6 +1968,10 @@
   },
   {
     "type": "mod",
+    "named": false
+  },
+  {
+    "type": "new",
     "named": false
   },
   {

@@ -400,3 +400,35 @@ x = 1 : y = 2
         (assignment_expression
           (identifier)
           (number_literal))))))
+
+==================
+Sub without parentheses
+==================
+
+Sub MySub
+End Sub
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (sub_declaration
+        (identifier)))))
+
+==================
+Function without parentheses
+==================
+
+Function MyFunc
+End Function
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (function_declaration
+        (identifier)))))
