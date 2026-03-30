@@ -2,7 +2,14 @@
   "name": "tree-sitter-vbscript",
   "version": "0.3.0",
   "description": "VBScript grammar for the tree-sitter parsing library",
-  "repository": "https://github.com/SasaCetkovic/tree-sitter-vbscript",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SasaCetkovic/tree-sitter-vbscript.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SasaCetkovic/tree-sitter-vbscript/issues"
+  },
+  "homepage": "https://github.com/SasaCetkovic/tree-sitter-vbscript#readme",
   "license": "MIT",
   "author": {
     "name": "Sasa Cetkovic",
