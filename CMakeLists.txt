@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 
 project(tree-sitter-vbscript
-        VERSION "0.3.0"
+        VERSION "0.4.0"
         DESCRIPTION "VBScript grammar for the tree-sitter parsing library"
         HOMEPAGE_URL "https://github.com/SasaCetkovic/tree-sitter-vbscript"
         LANGUAGES C)
