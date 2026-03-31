@@ -7,7 +7,7 @@ repository = "https://github.com/SasaCetkovic/tree-sitter-vbscript"
 authors = ["Sasa Cetkovic <sasa.cetkovic@outlook.cz>"]
 
 [grammars.vbscript]
-repository = "https://github.com/SasaCetkovic/tree-sitter-vbscript"
-rev = "HEAD"
+repository = "file:///Users/sasa/Projects/GitHub/tree-sitter-vbscript"
+rev = "3237bcdd4bf4ab3e60897a8328d9cbed9ee6e990"
 
 languages = ["languages/vbscript"]
