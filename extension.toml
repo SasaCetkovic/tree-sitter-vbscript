@@ -8,6 +8,6 @@ authors = ["Sasa Cetkovic <sasa.cetkovic@outlook.cz>"]
 
 [grammars.vbscript]
 repository = "file:///Users/sasa/Projects/GitHub/tree-sitter-vbscript"
-rev = "de16d9553d0678552f6c8d090a1004d4ec7315d6"
+rev = "15d2d78f4bbdb3b4a2a94ffe82bd0ac00e67e61b"
 
 languages = ["languages/vbscript"]
