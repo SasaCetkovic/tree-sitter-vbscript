@@ -31,13 +31,19 @@
 (unqualified_member_expression property: (identifier) @property)
 (call_expression function: (identifier) @function.call)
 (call_expression function: (member_expression property: (identifier) @function.call))
+(implicit_call_statement function: (identifier) @function.call)
+(implicit_call_statement function: (member_expression property: (identifier) @function.call))
+(implicit_call_statement function: (unqualified_member_expression property: (identifier) @function.call))
+(call_statement (identifier) @function.call)
+(call_statement (member_expression property: (identifier) @function.call))
 "." @punctuation.delimiter
 "=" @operator
+"is" @keyword
 (binary_expression operator: _ @operator)
 (unary_expression operator: _ @operator)
-(line_label label: _ @label)
-(goto_statement label: _ @label)
-(on_error_statement label: _ @label)
+(line_label label: (identifier) @label)
+(goto_statement label: (identifier) @label)
+(on_error_statement label: (identifier) @label)
 "(" @punctuation.bracket
 ")" @punctuation.bracket
 "," @punctuation.delimiter
