@@ -432,15 +432,19 @@ module.exports = grammar({
             $.constant_declaration
         ),
 
+        // `Public x` / `Private x` replace `Dim`; they are not combined with it
+        // (VBScript Language Reference: Public, Private, Dim statements).
         variable_declaration: $ => seq(
-            optional(field('access_modifier', choice(
-                kw('public'),
-                kw('private')
-            ))),
-            field('keyword', choice(
-                kw('dim'),
-                seq(kw('redim'), optional(kw('preserve')))
-            )),
+            choice(
+                field('access_modifier', choice(
+                    kw('public'),
+                    kw('private')
+                )),
+                field('keyword', choice(
+                    kw('dim'),
+                    seq(kw('redim'), optional(kw('preserve')))
+                ))
+            ),
             seq(
                 $.declared_variable,
                 repeat(seq(',', $.declared_variable))

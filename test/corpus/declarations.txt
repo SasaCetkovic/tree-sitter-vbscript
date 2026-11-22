@@ -131,10 +131,10 @@ ReDim Preserve myArr(10)
               (number_literal))))))))
 
 ==================
-Public Dim
+Public variable declaration
 ==================
 
-Public Dim x
+Public x
 
 ---
 
@@ -148,10 +148,10 @@ Public Dim x
             (identifier)))))))
 
 ==================
-Private Dim
+Private variable declaration
 ==================
 
-Private Dim x
+Private x
 
 ---
 

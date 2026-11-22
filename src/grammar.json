@@ -2296,58 +2296,55 @@
               }
             },
             {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "FIELD",
-          "name": "keyword",
-          "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "ALIAS",
-                "content": {
-                  "type": "PATTERN",
-                  "value": "[dD][iI][mM]"
-                },
-                "named": false,
-                "value": "dim"
-              },
-              {
-                "type": "SEQ",
+              "type": "FIELD",
+              "name": "keyword",
+              "content": {
+                "type": "CHOICE",
                 "members": [
                   {
                     "type": "ALIAS",
                     "content": {
                       "type": "PATTERN",
-                      "value": "[rR][eE][dD][iI][mM]"
+                      "value": "[dD][iI][mM]"
                     },
                     "named": false,
-                    "value": "redim"
+                    "value": "dim"
                   },
                   {
-                    "type": "CHOICE",
+                    "type": "SEQ",
                     "members": [
                       {
                         "type": "ALIAS",
                         "content": {
                           "type": "PATTERN",
-                          "value": "[pP][rR][eE][sS][eE][rR][vV][eE]"
+                          "value": "[rR][eE][dD][iI][mM]"
                         },
                         "named": false,
-                        "value": "preserve"
+                        "value": "redim"
                       },
                       {
-                        "type": "BLANK"
+                        "type": "CHOICE",
+                        "members": [
+                          {
+                            "type": "ALIAS",
+                            "content": {
+                              "type": "PATTERN",
+                              "value": "[pP][rR][eE][sS][eE][rR][vV][eE]"
+                            },
+                            "named": false,
+                            "value": "preserve"
+                          },
+                          {
+                            "type": "BLANK"
+                          }
+                        ]
                       }
                     ]
                   }
                 ]
               }
-            ]
-          }
+            }
+          ]
         },
         {
           "type": "SEQ",

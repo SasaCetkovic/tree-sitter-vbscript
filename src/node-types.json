@@ -1644,7 +1644,7 @@
       },
       "keyword": {
         "multiple": true,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "dim",

@@ -37,6 +37,38 @@ End Class
                 (identifier)))))))))
 
 ==================
+Class with Public and Private members
+==================
+
+Class MyClass
+Private mItems, mCount(10)
+Public Name
+End Class
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (class_statement
+        (identifier)
+        (class_statement_group
+          (declaration_statement
+            (variable_declaration
+              (declared_variable
+                (identifier))
+              (declared_variable
+                (identifier)
+                (argument_list
+                  (number_literal))))))
+        (class_statement_group
+          (declaration_statement
+            (variable_declaration
+              (declared_variable
+                (identifier)))))))))
+
+==================
 Class with Property Get
 ==================
 
