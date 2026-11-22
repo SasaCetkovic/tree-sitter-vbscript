@@ -6,8 +6,8 @@ description = "VBScript language support for Zed"
 repository = "https://github.com/SasaCetkovic/tree-sitter-vbscript"
 authors = ["Sasa Cetkovic <sasa.cetkovic@outlook.cz>"]
 
+# The grammar is the root of this same repository. Pin `rev` to the latest
+# commit that changes grammar.js or src/.
 [grammars.vbscript]
-repository = "file:///Users/sasa/Projects/GitHub/tree-sitter-vbscript"
-rev = "15d2d78f4bbdb3b4a2a94ffe82bd0ac00e67e61b"
-
-languages = ["languages/vbscript"]
+repository = "https://github.com/SasaCetkovic/tree-sitter-vbscript"
+rev = "0582b1c30a9717be13685700ed31f5129b4475ff"
