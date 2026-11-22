@@ -51,7 +51,3 @@
 
 (while_wend_statement
   "wend" @end) @indent
-
-(_
-  "("
-  ")" @end) @indent

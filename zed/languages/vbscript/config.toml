@@ -19,9 +19,17 @@ brackets = [
 #
 # Indent after: [Public|Private] [Default] Sub/Function/Class/Property ...,
 # For, Do, While, With, Select Case, Case, Else, and lines ending in Then.
-increase_indent_pattern = "(?i)^\\s*((public|private)\\s+)?(default\\s+)?(sub|function|class|property\\s+(get|let|set))\\b|^\\s*(for|do|while|with|select\\s+case|case|else)\\b|\\bthen\\s*('.*)?$"
+# The Then must be outside strings and comments ("..." pairs and no ').
+# Known gap: one-line blocks such as `For i = 1 To 3: x = i: Next` still
+# indent the next line.
+increase_indent_pattern = "(?i)^\\s*((public|private)\\s+)?(default\\s+)?(sub|function|class|property\\s+(get|let|set))\\b|^\\s*(for|do|while|with|select\\s+case|case|else)\\b|^([^'\"]|\"[^\"]*\")*\\bthen\\s*('.*)?$"
 
-# Else and ElseIf always sit one level left of the body before them. They are
-# typed before End If exists, so the If is still an ERROR node and cannot be
-# matched in indents.scm.
-decrease_indent_pattern = "(?i)^\\s*(else|elseif)\\b"
+# Outdent one level from the previous line. For Else/ElseIf this is the only
+# rule: they are typed before End If exists, so the If is still an ERROR node.
+# For closing keywords, indents.scm aligns them with the block's first line;
+# this pattern covers a closer typed right after an opener line (e.g. Else,
+# then End If), where Zed would otherwise indent from the opener.
+# Known gap: after an empty last Case, End Select ends up one level too deep.
+# A valid_after rule would fix that but misplace the outer End Select of
+# nested Select blocks.
+decrease_indent_pattern = "(?i)^\\s*(else|elseif|end|next|loop|wend)\\b"
