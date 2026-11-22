@@ -1,11 +1,27 @@
 name = "VBScript"
 grammar = "vbscript"
-path_suffixes = ["vbs", "asp"]
-line_comments = ["' "]
+# Only standalone scripts. Classic ASP pages (.asp, .asa) mix HTML with
+# <% %> blocks that this grammar does not parse; the asp-classic extension
+# handles those.
+path_suffixes = ["vbs"]
+line_comments = ["' ", "REM "]
 tab_size = 4
 hard_tabs = false
-[[brackets]]
-start = "("
-end = ")"
-close = true
-newline = false
+autoclose_before = ")"
+brackets = [
+  { start = "(", end = ")", close = true, newline = false },
+  { start = "\"", end = "\"", close = true, newline = false, not_in = ["comment", "string"] },
+]
+
+# A block that is still being typed has no closing keyword yet, so it is an
+# ERROR node with no syntax range to indent from. These line patterns cover
+# that case; indents.scm handles closing keywords once the block is complete.
+#
+# Indent after: [Public|Private] [Default] Sub/Function/Class/Property ...,
+# For, Do, While, With, Select Case, Case, Else, and lines ending in Then.
+increase_indent_pattern = "(?i)^\\s*((public|private)\\s+)?(default\\s+)?(sub|function|class|property\\s+(get|let|set))\\b|^\\s*(for|do|while|with|select\\s+case|case|else)\\b|\\bthen\\s*('.*)?$"
+
+# Else and ElseIf always sit one level left of the body before them. They are
+# typed before End If exists, so the If is still an ERROR node and cannot be
+# matched in indents.scm.
+decrease_indent_pattern = "(?i)^\\s*(else|elseif)\\b"

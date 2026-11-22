@@ -10,4 +10,4 @@ authors = ["Sasa Cetkovic <sasa.cetkovic@outlook.cz>"]
 # commit that changes grammar.js or src/.
 [grammars.vbscript]
 repository = "https://github.com/SasaCetkovic/tree-sitter-vbscript"
-rev = "0582b1c30a9717be13685700ed31f5129b4475ff"
+rev = "4feb5519736cbc115b463b53f694b809dc73cfc7"
