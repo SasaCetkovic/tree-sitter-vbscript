@@ -1,3 +1,7 @@
+; When several patterns match the same node, the LAST one wins, so this
+; generic fallback must come first and more specific patterns after it.
+(identifier) @variable
+
 (comment) @comment
 (rem_comment) @comment
 (string_literal) @string
@@ -82,5 +86,3 @@
 "resume" @keyword
 "option" @keyword
 "explicit" @keyword
-; Fallback — must be last
-(identifier) @variable
