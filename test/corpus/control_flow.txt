@@ -382,3 +382,33 @@ End If
                 (assignment_expression
                   (identifier)
                   (number_literal))))))))))
+
+==================
+Select Case with comment and blank line before first Case
+==================
+
+Select Case x
+    ' first
+
+    Case 1
+        y = 1
+End Select
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (select_case_statement
+        (identifier)
+        (comment)
+        (case_clause
+          (case_expression_list
+            (number_literal))
+          (statement_line
+            (statement_group
+              (expression_statement
+                (assignment_expression
+                  (identifier)
+                  (number_literal))))))))))

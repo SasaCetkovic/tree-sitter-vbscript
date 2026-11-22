@@ -232,3 +232,34 @@ End Class
         (class_statement_group
           (sub_declaration
             (identifier)))))))
+
+==================
+Class with blank and comment lines between members
+==================
+
+Class MyClass
+    ' fields
+    Private x
+
+    Sub Foo()
+    End Sub
+
+End Class
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (class_statement
+        (identifier)
+        (comment)
+        (class_statement_group
+          (declaration_statement
+            (variable_declaration
+              (declared_variable
+                (identifier)))))
+        (class_statement_group
+          (sub_declaration
+            (identifier)))))))

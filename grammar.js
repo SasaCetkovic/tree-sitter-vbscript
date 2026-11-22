@@ -320,7 +320,11 @@ module.exports = grammar({
             kw('class'),
             field('name', $.identifier),
             $._terminator,
-            repeat(seq($.class_statement_group, $._terminator)),
+            // A bare terminator is a blank or comment-only line between members.
+            repeat(choice(
+                seq($.class_statement_group, $._terminator),
+                $._terminator
+            )),
             kw('end'),
             kw('class')
         ),
@@ -397,7 +401,8 @@ module.exports = grammar({
         select_case_statement: $ => seq(
             kw('select'), kw('case'),
             field('value', $._expression),
-            $._terminator,
+            // Blank or comment-only lines may precede the first Case.
+            repeat1($._terminator),
             repeat($.case_clause),
             optional($.case_else_clause),
             kw('end'), kw('select')

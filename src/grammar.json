@@ -1531,11 +1531,20 @@
         {
           "type": "REPEAT",
           "content": {
-            "type": "SEQ",
+            "type": "CHOICE",
             "members": [
               {
-                "type": "SYMBOL",
-                "name": "class_statement_group"
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "class_statement_group"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "_terminator"
+                  }
+                ]
               },
               {
                 "type": "SYMBOL",
@@ -2027,8 +2036,11 @@
           }
         },
         {
-          "type": "SYMBOL",
-          "name": "_terminator"
+          "type": "REPEAT1",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_terminator"
+          }
         },
         {
           "type": "REPEAT",
