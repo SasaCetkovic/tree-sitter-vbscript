@@ -10,7 +10,7 @@
 - Case-insensitive keyword matching (`If`, `IF`, `if` all work)
 - File types: `.vbs`, `.asp`
 - Six language bindings: Node.js, Rust, Python, Go, Swift, C
-- Zed editor extension with syntax highlighting, outline, and code folding
+- Zed editor extension with syntax highlighting, outline, bracket matching, and auto-indentation
 
 ## Supported constructs
 
@@ -98,7 +98,9 @@ go get github.com/SasaCetkovic/tree-sitter-vbscript/bindings/go
 
 Install from the Zed extension registry: search for **VBScript** in Extensions.
 
-Or load as a dev extension pointing to this repository.
+The extension lives in [`zed/`](zed/) and handles `.vbs` files: syntax highlighting, an outline of classes, procedures, and properties, bracket matching, auto-indentation, and Vim text objects. Classic ASP pages (`.asp`) mix HTML with `<% %>` blocks and are covered by the separate ASP Classic extension.
+
+To try local changes, run `zed: install dev extension` and select the `zed/` directory, not the repository root.
 
 ## Development
 
@@ -108,6 +110,8 @@ npx tree-sitter generate   # regenerate parser
 npx tree-sitter test       # run corpus tests
 npm start                  # interactive playground
 ```
+
+After a grammar change is pushed, update `rev` in `zed/extension.toml` to that commit so the Zed extension uses it.
 
 ## License
 
