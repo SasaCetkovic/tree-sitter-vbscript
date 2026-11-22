@@ -611,7 +611,12 @@ module.exports = grammar({
 
         rem_comment: $ => token(seq(ci('rem'), /[ \t].*/)),
 
-        line_continuation: $ => token(seq(' _', choice('\r\n', '\n', '\r'))),
+        // The whitespace before `_` is consumed by the `/[ \t]/` extra. Starting
+        // this token with a space would stop the lexer from skipping spaces,
+        // so every token would include the whitespace before it.
+        // Trade-off: `_` right after a non-space character (e.g. `a,_`) is also
+        // accepted, although VBScript requires whitespace before it.
+        line_continuation: $ => token(seq('_', choice('\r\n', '\n', '\r'))),
 
         identifier: $ => /[a-zA-Z_][a-zA-Z0-9_]*/,
 

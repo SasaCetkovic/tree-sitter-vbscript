@@ -3743,7 +3743,7 @@
         "members": [
           {
             "type": "STRING",
-            "value": " _"
+            "value": "_"
           },
           {
             "type": "CHOICE",
