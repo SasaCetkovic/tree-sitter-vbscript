@@ -620,7 +620,17 @@ module.exports = grammar({
 
         identifier: $ => /[a-zA-Z_][a-zA-Z0-9_]*/,
 
-        string_literal: $ => seq('"', repeat(choice(/[^"]+/, '""')), '"'),
+        // Content tokens are immediate so no extras (comments, whitespace) can be
+        // lexed inside a string, and prec(1) lets content win over a longer
+        // `'` comment match, e.g. in "'". Strings cannot span lines.
+        string_literal: $ => seq(
+            '"',
+            repeat(choice(
+                token.immediate(prec(1, /[^"\r\n]+/)),
+                token.immediate('""')
+            )),
+            token.immediate('"')
+        ),
 
         number_literal: $ => /(\d+\.?\d*|\.\d+)([eE][+-]?\d+)?/,
 

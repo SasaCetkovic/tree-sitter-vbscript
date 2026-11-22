@@ -50,6 +50,44 @@ x = "He said ""hi"""
           (string_literal))))))
 
 ==================
+String starting with apostrophe
+==================
+
+x = "'"
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (assignment_expression
+          (identifier)
+          (string_literal))))))
+
+==================
+Apostrophes in concatenated strings
+==================
+
+sql = "n = '" & n & "'"
+
+---
+
+(source_file
+  (statement_line)
+  (statement_line
+    (statement_group
+      (expression_statement
+        (assignment_expression
+          (identifier)
+          (binary_expression
+            (binary_expression
+              (string_literal)
+              (identifier))
+            (string_literal)))))))
+
+==================
 Number integer
 ==================
 
